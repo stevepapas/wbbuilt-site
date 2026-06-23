@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import ParallaxImage from '../components/ParallaxImage.astro';
 import { images } from '../data/site';
+import { withBase } from '../utils/paths';
 ---
 <BaseLayout
   title="HOME | Wbbuilt | High-End Residential, Multi-Residential & Commercial Builder Melbourne"
@@ -17,7 +18,7 @@ import { images } from '../data/site';
         <h2 class="sec-title">Story</h2>
         <p class="sec-sub">DISCOVER THE WB BUILT JOURNEY</p>
         <p>WB Built is a Melbourne-based construction company specializing in high-end residential, multi-residential, and commercial projects. They focus on delivering complex builds with precision, integrity, and exceptional site management. With extensive experience in luxury apartments, bespoke residences, commercial offices, hospitality fit-outs, and education projects, WB BUILT is trusted to manage technically demanding projects while maintaining high standards of quality, safety, and delivery.</p>
-        <a class="btn btn-light" href="/about">More</a>
+        <a class="btn btn-light" href={withBase('/about')}>More</a>
       </div>
       <div class="image-card">
         <ParallaxImage src={images.detail} alt="WB Built high-end residential construction detail" speed="0.3" />
@@ -31,7 +32,7 @@ import { images } from '../data/site';
     <div class="container">
       <h2 class="sec-title sec-title--beige">Services</h2>
       <p class="sec-sub sec-sub--beige">WB Built provides end-to-end construction services across a range of sectors.</p>
-      <a class="btn btn-dark" href="/contact" style="margin-bottom:48px;display:inline-block">Contact</a>
+      <a class="btn btn-dark" href={withBase('/contact')} style="margin-bottom:48px;display:inline-block">Contact</a>
       <div class="cards">
         <article class="service-item">
           <svg class="svc-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -109,7 +110,7 @@ import { images } from '../data/site';
         <li>Community and sporting infrastructure</li>
       </ul>
       <p class="proj-note">Each project reflects the quality, capability and commitment of our team.</p>
-      <a class="btn btn-light" href="/portfolio" style="margin-bottom:48px;display:inline-block">Portfolio</a>
+      <a class="btn btn-light" href={withBase('/portfolio')} style="margin-bottom:48px;display:inline-block">Portfolio</a>
 
       <div class="proj-stats">
         <div class="proj-stat-main">
@@ -147,7 +148,7 @@ import { images } from '../data/site';
             <h3>Construction</h3>
             <p>Our innovative and adaptive building technique ensures we can always deliver a quality and efficient product.</p>
           </div>
-          <a class="btn" href="/contact" style="margin-top:8px">Contact</a>
+          <a class="btn" href={withBase('/contact')} style="margin-top:8px">Contact</a>
         </div>
         <div class="image-card">
           <ParallaxImage src={images.residential} alt="WB Built residential project" speed="0.28" />

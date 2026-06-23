@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
+import { withBase } from '../utils/paths';
 ---
 <BaseLayout title="Accessibility Statement | Wbbuilt">
   <Hero />
@@ -34,7 +35,7 @@ import Hero from '../components/Hero.astro';
       <p>In addition to our digital efforts, WB Built ensures physical accessibility in all our office locations and project sites. Our facilities are equipped with a range of accessibility arrangements, including but not limited to accessible parking, ramps, audio induction loops, and elevators, to ensure a seamless experience for all visitors.</p>
 
       <h2>Contact Us</h2>
-      <p>If you encounter any accessibility issues or have suggestions for improving our website's accessibility, please contact us via the <a href="/contact">contact page</a>.</p>
+      <p>If you encounter any accessibility issues or have suggestions for improving our website's accessibility, please contact us via the <a href={withBase('/contact')}>contact page</a>.</p>
     </div>
   </section>
 </BaseLayout>

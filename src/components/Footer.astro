@@ -1,5 +1,6 @@
 ---
 import { images, site } from '../data/site';
+import { withBase } from '../utils/paths';
 ---
 <footer class="footer">
   <div class="container footer-grid">
@@ -8,9 +9,9 @@ import { images, site } from '../data/site';
       <p class="footer-email"><a href={`mailto:${site.email}`}>{site.email}</a></p>
     </div>
     <div class="links">
-      <a href="/faq">FAQ</a>
-      <a href="/accessibility-statement">Accessibility Statement</a>
-      <a href="/privacy-policy">Privacy Policy</a>
+      <a href={withBase('/faq')}>FAQ</a>
+      <a href={withBase('/accessibility-statement')}>Accessibility Statement</a>
+      <a href={withBase('/privacy-policy')}>Privacy Policy</a>
       <a href={site.instagram} target="_blank" rel="noreferrer noopener">Instagram</a>
     </div>
   </div>

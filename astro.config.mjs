@@ -1,7 +1,11 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
+const base = process.env.ASTRO_BASE || '/';
+const site = process.env.ASTRO_SITE || 'https://wbbuilt.com.au';
+
 export default defineConfig({
-  site: 'https://wbbuilt.com.au',
+  site,
+  base,
   integrations: [sitemap()],
 });
