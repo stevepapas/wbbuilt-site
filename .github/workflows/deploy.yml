@@ -21,10 +21,10 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build for kremedia staging
+      - name: Build for wbbuilt.kremedia.com
         env:
-          ASTRO_BASE: /wbbuilt/
-          ASTRO_SITE: https://kremedia.com/wbbuilt
+          ASTRO_BASE: /
+          ASTRO_SITE: https://wbbuilt.kremedia.com
         run: npm run build
 
       - name: Push dist to deploy branch

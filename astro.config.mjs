@@ -8,4 +8,8 @@ export default defineConfig({
   site,
   base,
   integrations: [sitemap()],
+  server: {
+    host: true,
+    port: 4321,
+  },
 });
