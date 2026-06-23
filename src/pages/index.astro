@@ -1,0 +1,266 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import ParallaxImage from '../components/ParallaxImage.astro';
+import { images } from '../data/site';
+---
+<BaseLayout
+  title="HOME | Wbbuilt | High-End Residential, Multi-Residential & Commercial Builder Melbourne"
+  description="WB Built is a Melbourne-based construction company specialising in high-end residential, multi-residential and commercial projects."
+>
+  <Hero />
+
+  <!-- Story -->
+  <section class="section story">
+    <div class="container grid-2">
+      <div class="story-text">
+        <h2 class="sec-title">Story</h2>
+        <p class="sec-sub">DISCOVER THE WB BUILT JOURNEY</p>
+        <p>WB Built is a Melbourne-based construction company specializing in high-end residential, multi-residential, and commercial projects. They focus on delivering complex builds with precision, integrity, and exceptional site management. With extensive experience in luxury apartments, bespoke residences, commercial offices, hospitality fit-outs, and education projects, WB BUILT is trusted to manage technically demanding projects while maintaining high standards of quality, safety, and delivery.</p>
+        <a class="btn btn-light" href="/about">More</a>
+      </div>
+      <div class="image-card">
+        <ParallaxImage src={images.detail} alt="WB Built high-end residential construction detail" speed="0.3" />
+      </div>
+    </div>
+    <img class="story-mark" src={images.logo} alt="" aria-hidden="true" />
+  </section>
+
+  <!-- Services -->
+  <section class="section services">
+    <div class="container">
+      <h2 class="sec-title sec-title--beige">Services</h2>
+      <p class="sec-sub sec-sub--beige">WB Built provides end-to-end construction services across a range of sectors.</p>
+      <a class="btn btn-dark" href="/contact" style="margin-bottom:48px;display:inline-block">Contact</a>
+      <div class="cards">
+        <article class="service-item">
+          <svg class="svc-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="10" y="28" width="44" height="30"/>
+            <polyline points="4,28 32,8 60,28"/>
+            <rect x="24" y="40" width="16" height="18"/>
+            <line x1="18" y1="28" x2="18" y2="40"/>
+            <line x1="46" y1="28" x2="46" y2="40"/>
+            <line x1="10" y1="40" x2="54" y2="40"/>
+          </svg>
+          <h3>Design &amp; Construct (D&amp;C)</h3>
+          <p>Integrated delivery working closely with consultants from early design through to completion—ensuring buildability, cost control, and program certainty.</p>
+        </article>
+        <article class="service-item">
+          <svg class="svc-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="12" y="30" width="40" height="26"/>
+            <polyline points="6,30 32,12 58,30"/>
+            <rect x="22" y="44" width="10" height="12"/>
+            <rect x="36" y="38" width="8" height="8"/>
+            <rect x="20" y="38" width="8" height="8"/>
+          </svg>
+          <h3>High-End Residential</h3>
+          <p>Premium single homes and bespoke architectural builds executed with meticulous craftsmanship.</p>
+        </article>
+        <article class="service-item">
+          <svg class="svc-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="10" y="10" width="44" height="48"/>
+            <line x1="10" y1="24" x2="54" y2="24"/>
+            <line x1="10" y1="38" x2="54" y2="38"/>
+            <rect x="18" y="14" width="8" height="7"/>
+            <rect x="30" y="14" width="8" height="7"/>
+            <rect x="42" y="14" width="4" height="7"/>
+            <rect x="18" y="28" width="8" height="7"/>
+            <rect x="30" y="28" width="8" height="7"/>
+            <rect x="42" y="28" width="4" height="7"/>
+            <rect x="24" y="44" width="16" height="14"/>
+          </svg>
+          <h3>Multi-Residential</h3>
+          <p>Architecturally driven apartment buildings constructed with expertise in complex structures, basements and D&amp;C delivery.</p>
+        </article>
+        <article class="service-item">
+          <svg class="svc-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="16" y="6" width="32" height="52"/>
+            <line x1="16" y1="18" x2="48" y2="18"/>
+            <line x1="16" y1="30" x2="48" y2="30"/>
+            <line x1="16" y1="42" x2="48" y2="42"/>
+            <rect x="22" y="8" width="5" height="7"/>
+            <rect x="30" y="8" width="5" height="7"/>
+            <rect x="38" y="8" width="4" height="7"/>
+            <rect x="22" y="20" width="5" height="7"/>
+            <rect x="30" y="20" width="5" height="7"/>
+            <rect x="38" y="20" width="4" height="7"/>
+            <rect x="22" y="32" width="5" height="7"/>
+            <rect x="30" y="32" width="5" height="7"/>
+            <rect x="38" y="32" width="4" height="7"/>
+            <rect x="28" y="48" width="8" height="10"/>
+          </svg>
+          <h3>Commercial &amp; Fitouts</h3>
+          <p>Office buildings, adaptive re-use projects, hospitality and specialist fitouts delivered to strict program and performance expectations.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section class="section projects">
+    <div class="container">
+      <h2 class="sec-title">Projects</h2>
+      <p class="proj-intro">WB Built's leadership team has delivered major projects including:</p>
+      <ul class="list">
+        <li>Multi-storey apartment developments</li>
+        <li>Commercial office buildings with car stackers</li>
+        <li>Education campuses delivered in live environments</li>
+        <li>Industrial and logistics facilities</li>
+        <li>Community and sporting infrastructure</li>
+      </ul>
+      <p class="proj-note">Each project reflects the quality, capability and commitment of our team.</p>
+      <a class="btn btn-light" href="/portfolio" style="margin-bottom:48px;display:inline-block">Portfolio</a>
+
+      <div class="proj-stats">
+        <div class="proj-stat-main">
+          <div class="stat-num">80+</div>
+          <p class="stat-desc">across residential, commercial, industrial and community sectors</p>
+        </div>
+        <article class="proj-cat">
+          <h3>Commercial</h3>
+          <p>Explore our portfolio of innovative commercial projects tailored to modern business needs.</p>
+        </article>
+        <article class="proj-cat">
+          <h3>Hospitality</h3>
+          <p>Experience our exceptional hospitality projects designed for comfort, functionality, and style.</p>
+        </article>
+        <article class="proj-cat">
+          <h3>Residential</h3>
+          <p>Our team provide a personal and personal approach to our residential projects. We look at innovative, cost effective and timely ways to bring your dream home to life.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Consultation -->
+  <section class="section consult">
+    <div class="container">
+      <h2 class="sec-title consult-title">Consultation</h2>
+      <p class="consult-sub">Understanding your vision and project requirements.</p>
+      <div class="grid-2 consult-grid">
+        <div>
+          <div class="step">
+            <h3>Planning</h3>
+            <p>WB Built are involved with projects from conception to completion. It is never too early to get in touch and let us steer your project in the right direction.</p>
+          </div>
+          <div class="step">
+            <h3>Construction</h3>
+            <p>Our innovative and adaptive building technique ensures we can always deliver a quality and efficient product.</p>
+          </div>
+          <a class="btn" href="/contact" style="margin-top:8px">Contact</a>
+        </div>
+        <div class="image-card">
+          <ParallaxImage src={images.residential} alt="WB Built residential project" speed="0.28" />
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* ── Story ──────────────────────────────────── */
+  .story {
+    background: #404040;
+    position: relative;
+    overflow: hidden;
+  }
+  .story p { color: rgba(255,255,255,0.75); }
+  .story-mark {
+    position: absolute;
+    bottom: -20px;
+    right: -20px;
+    width: clamp(120px, 18vw, 200px);
+    opacity: 0.12;
+    pointer-events: none;
+    filter: invert(1);
+  }
+
+  /* ── Services ───────────────────────────────── */
+  .services { background: #ccbfac; }
+  .svc-icon {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 16px;
+    color: rgba(0,0,0,0.5);
+    display: block;
+  }
+  .services .service-item h3 { color: #000; }
+  .services .service-item p { color: rgba(0,0,0,0.6); }
+
+  /* ── Projects ───────────────────────────────── */
+  .projects { background: #808080; }
+  .projects p, .projects .list li { color: rgba(255,255,255,0.75); }
+  .projects .list li::before { color: #fff; }
+  .stat-num {
+    font-family: var(--font-heading);
+    font-size: clamp(4rem, 12vw, 7rem);
+    font-weight: 400;
+    line-height: 0.9;
+    color: #fff;
+    margin-bottom: 12px;
+  }
+  .stat-desc { color: rgba(255,255,255,0.75); max-width: 180px; font-size: 0.9rem; }
+  .proj-stats {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr 1fr;
+    gap: 32px;
+    align-items: start;
+  }
+  .proj-cat h3 { color: #fff; font-size: 1.1rem; }
+  .proj-cat p { color: rgba(255,255,255,0.7); font-size: 0.9rem; }
+  .proj-intro, .proj-note { color: rgba(255,255,255,0.75); }
+
+  /* ── Consultation ───────────────────────────── */
+  .consult { background: #fff; }
+  .consult-title { color: #000; }
+  .consult-sub { color: var(--muted); margin-bottom: 40px; font-size: 1.05rem; }
+
+  /* ── Shared section headings ────────────────── */
+  .sec-title {
+    font-family: var(--font-heading);
+    font-size: clamp(3rem, 7vw, 5rem);
+    font-weight: 400;
+    color: #fff;
+    margin: 0 0 12px;
+    line-height: 1;
+    letter-spacing: 0.02em;
+  }
+  .sec-title--beige { color: rgba(0,0,0,0.45); }
+  .sec-sub {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    margin: 0 0 28px;
+  }
+  .sec-sub--beige { color: rgba(0,0,0,0.55); margin-bottom: 24px; }
+
+  /* ── Buttons for dark/beige sections ───────── */
+  .btn-light {
+    border-color: rgba(255,255,255,0.5);
+    color: #fff;
+    background: transparent;
+  }
+  .btn-light:hover {
+    background: #fff;
+    color: #000;
+  }
+  .btn-dark {
+    border-color: #000;
+    color: #000;
+    background: transparent;
+  }
+  .btn-dark:hover {
+    background: #000;
+    color: #fff;
+  }
+
+  @media (max-width: 860px) {
+    .proj-stats { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 600px) {
+    .proj-stats { grid-template-columns: 1fr; }
+  }
+</style>

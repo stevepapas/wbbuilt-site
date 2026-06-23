@@ -1,0 +1,155 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import { images } from '../data/site';
+---
+<BaseLayout title="About WB Built | Melbourne Construction Team">
+  <Hero />
+
+  <!-- People & Culture -->
+  <section class="section people">
+    <div class="container">
+      <h2 class="about-heading">People &amp; Culture</h2>
+      <p>We're a young, experienced team who care about how we build and who we build for.</p>
+      <p>We value trust, respect on site, and delivering work we're proud to put our name on.</p>
+      <p><strong>Precision. Delivering with Integrity.</strong></p>
+      <p>WB Built specialises in high-end residential, multi-residential and commercial construction.</p>
+      <p>Every project is managed with unwavering attention to detail, technical capability and a commitment to excellence.</p>
+      <ul class="list">
+        <li>Building spaces people want to be in.</li>
+        <li>Thoughtful building, done properly.</li>
+        <li>Quality construction, built with people in mind.</li>
+      </ul>
+      <p>High-end residential, multi-residential and commercial construction across Melbourne.</p>
+    </div>
+  </section>
+
+  <!-- Matthew Whelan -->
+  <section class="section director-section director-section--beige">
+    <div class="container director-layout">
+      <div class="director-content">
+        <h2 class="director-name">Matthew Whelan</h2>
+        <p class="director-role">Director &amp; Owner</p>
+        <p>A third-generation builder with deep experience across high-end residential, multi-residential, commercial and education projects. Matt combines hands-on construction knowledge with strategic project leadership to deliver efficient, well-coordinated outcomes.</p>
+        <p>A third-generation builder with experience across luxury residential, multi-storey apartments, commercial, education, and hospitality projects.</p>
+        <p>Matthew's hands-on construction knowledge, planning ability, and attention to detail ensure projects are delivered efficiently and to the highest standard.</p>
+        <p>Licensed by the Victorian Building Authority – Domestic Builder (Unlimited). Qualifications include Construction Management, Carpentry, and OH&amp;S.</p>
+        <p class="expertise-label">EXPERTISE</p>
+        <ul class="list">
+          <li>D&amp;C management</li>
+          <li>Complex structural builds</li>
+          <li>Architectural coordination</li>
+          <li>Client communication</li>
+        </ul>
+        <p class="quote">"Matt brings a hands-on approach to every project, with a strong focus on communication and quality outcomes."</p>
+      </div>
+      <div class="director-photo">
+        <img src={images.about2} alt="Matthew Whelan – Director & Owner, WB Built" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Macgregor -->
+  <section class="section director-section">
+    <div class="container director-layout">
+      <div class="director-content">
+        <h2 class="director-name">Macgregor</h2>
+        <p>Macgregor discovered his passion for building and design while studying at RMIT. By the time WB BUILT was established, he had already spent sixteen years working with some of Victoria's leading construction companies. He has built a strong reputation among colleagues for his attention to detail and his ability to work well with people.</p>
+        <p>He is highly experienced in managing the full life cycle of building projects, from concept and design development through cost planning, budgeting, programming, delivery, and post-construction. He has managed more than twenty large-scale projects ranging in value from $5 million to $50 million, consistently delivering them on time and within budget.</p>
+        <p>As a project manager, he has worked on large-scale developments from $10 million to $40 million+. During his time as a senior project manager, he completed projects ranging in value from $5 million to $50 million. He has also managed multiple fit-outs and hospitality projects.</p>
+        <p>Macgregor is licensed by the Victorian Building Authority as a Commercial Builder (Unlimited).</p>
+        <p class="expertise-label">Qualifications</p>
+        <ul class="list">
+          <li>B. App. Sci. (Construction Management), RMIT</li>
+          <li>Cert III (OH&amp;S)</li>
+          <li>Masters of Urban Planning</li>
+        </ul>
+      </div>
+      <div class="director-photo">
+        <img src={images.about1} alt="Macgregor – Director, WB Built" loading="lazy" />
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* People & Culture */
+  .people { background: #fff; }
+  .about-heading {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 400;
+    color: var(--text);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin: 0 0 24px;
+  }
+  .people p { max-width: 640px; }
+
+  /* Director sections */
+  .director-section { background: #fff; }
+  .director-section--beige { background: #ccbfac; }
+
+  .director-layout {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: clamp(32px, 5vw, 64px);
+    align-items: start;
+  }
+
+  .director-name {
+    font-family: var(--font-heading);
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text);
+    margin: 0 0 6px;
+  }
+
+  .director-role {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-bottom: 24px;
+    font-style: italic;
+  }
+
+  .expertise-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text);
+    margin: 24px 0 10px;
+  }
+
+  .director-photo {
+    position: sticky;
+    top: calc(var(--header-h) + 24px);
+  }
+
+  .director-photo img {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
+  .quote {
+    font-style: italic;
+    color: var(--muted);
+    border-left: 2px solid currentColor;
+    padding-left: 16px;
+    margin-top: 20px;
+  }
+
+  @media (max-width: 700px) {
+    .director-layout {
+      grid-template-columns: 1fr;
+    }
+    .director-photo {
+      position: static;
+      order: -1;
+      max-width: 240px;
+    }
+  }
+</style>

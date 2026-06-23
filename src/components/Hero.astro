@@ -1,0 +1,71 @@
+---
+import { images } from '../data/site';
+const { overlay = false } = Astro.props;
+---
+<section class="hero">
+  <div class="hero-bg" data-parallax data-parallax-speed="0.45">
+    <img class="bg" src={images.hero} alt="WB Built construction site" />
+  </div>
+  {overlay && <div class="hero-overlay" aria-hidden="true"></div>}
+  <div class="container hero-inner">
+    <img class="hero-logo" src={images.logo} alt="WB Built logo" />
+    <p class="hero-tagline">BUILDING EXCELLENCE</p>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    height: 430px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin-top: calc(-1 * var(--header-h));
+    padding-top: var(--header-h);
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    opacity: 0.68;
+  }
+  .bg {
+    width: 100%;
+    height: 115%;
+    object-fit: cover;
+    will-change: transform;
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.25);
+  }
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 32px 0;
+  }
+  .hero-logo {
+    width: min(291px, 55vw);
+    margin-bottom: 16px;
+  }
+  .hero-tagline {
+    color: #fff;
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .bg { height: 100%; transform: none !important; }
+  }
+</style>

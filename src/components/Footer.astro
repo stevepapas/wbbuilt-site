@@ -1,0 +1,54 @@
+---
+import { images, site } from '../data/site';
+---
+<footer class="footer">
+  <div class="container footer-grid">
+    <div>
+      <img src={images.logoOutline} alt="WB Built logo" class="footer-logo" loading="lazy" />
+      <p class="footer-email"><a href={`mailto:${site.email}`}>{site.email}</a></p>
+    </div>
+    <div class="links">
+      <a href="/faq">FAQ</a>
+      <a href="/accessibility-statement">Accessibility Statement</a>
+      <a href="/privacy-policy">Privacy Policy</a>
+      <a href={site.instagram} target="_blank" rel="noreferrer noopener">Instagram</a>
+    </div>
+  </div>
+  <div class="container small">© 2026 FOLLOWTHELEADER</div>
+</footer>
+
+<style>
+  .footer {
+    padding: 56px 0 28px;
+    background: #5d5a51;
+    margin-top: 24px;
+  }
+  .footer-grid {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 32px;
+  }
+  .footer-logo { width: 180px; margin-bottom: 16px; }
+  .footer-email { margin: 0; font-size: 0.95rem; }
+  .footer-email a { color: rgba(255,255,255,0.65); }
+  .footer-email a:hover { color: #fff; }
+  .links {
+    display: grid;
+    gap: 10px;
+    text-align: right;
+    font-size: 0.9rem;
+  }
+  .links a { color: rgba(255,255,255,0.65); }
+  .links a:hover { color: #fff; }
+  .small {
+    margin-top: 40px;
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.04em;
+  }
+  @media (max-width: 700px) {
+    .footer-grid { flex-direction: column; }
+    .links { text-align: left; }
+  }
+</style>

@@ -1,0 +1,30 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+const {
+  title = 'WB Built',
+  description = 'High-end residential, multi-residential and commercial construction across Melbourne.',
+} = Astro.props;
+---
+<!doctype html>
+<html lang="en-AU">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <link rel="icon" href="https://static.wixstatic.com/shapes/0c8b36_c28c8718944d46d5a1c891d140877031.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <Header />
+    <main><slot /></main>
+    <Footer />
+    <script>
+      import { initParallax } from '../scripts/parallax.ts';
+      initParallax();
+      document.addEventListener('astro:page-load', initParallax);
+    </script>
+  </body>
+</html>
