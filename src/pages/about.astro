@@ -44,7 +44,7 @@ import { images } from '../data/site';
         <p class="quote">"Matt brings a hands-on approach to every project, with a strong focus on communication and quality outcomes."</p>
       </div>
       <div class="director-photo">
-        <img src={images.about2} alt="Matthew Whelan – Director & Owner, WB Built" loading="lazy" />
+        <img src={images.about1} alt="Matthew Whelan – Director & Owner, WB Built" loading="lazy" />
       </div>
     </div>
   </section>
@@ -54,6 +54,7 @@ import { images } from '../data/site';
     <div class="container director-layout">
       <div class="director-content">
         <h2 class="director-name">Macgregor</h2>
+        <p class="director-role">Director &amp; Co-founder</p>
         <p>Macgregor discovered his passion for building and design while studying at RMIT. By the time WB BUILT was established, he had already spent sixteen years working with some of Victoria's leading construction companies. He has built a strong reputation among colleagues for his attention to detail and his ability to work well with people.</p>
         <p>He is highly experienced in managing the full life cycle of building projects, from concept and design development through cost planning, budgeting, programming, delivery, and post-construction. He has managed more than twenty large-scale projects ranging in value from $5 million to $50 million, consistently delivering them on time and within budget.</p>
         <p>As a project manager, he has worked on large-scale developments from $10 million to $40 million+. During his time as a senior project manager, he completed projects ranging in value from $5 million to $50 million. He has also managed multiple fit-outs and hospitality projects.</p>
@@ -66,7 +67,7 @@ import { images } from '../data/site';
         </ul>
       </div>
       <div class="director-photo">
-        <img src={images.about1} alt="Macgregor – Director, WB Built" loading="lazy" />
+        <img src={images.about2} alt="Macgregor – Director & Co-founder, WB Built" loading="lazy" />
       </div>
     </div>
   </section>
@@ -77,14 +78,20 @@ import { images } from '../data/site';
   .people { background: #fff; }
   .about-heading {
     font-family: var(--font-heading);
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    font-weight: 400;
+    font-size: 45px;
+    line-height: 1.2em;
+    font-weight: 700;
     color: var(--text);
     text-transform: uppercase;
-    letter-spacing: 0.04em;
+    letter-spacing: 0;
     margin: 0 0 24px;
   }
-  .people p { max-width: 640px; }
+  .people p,
+  .people .list li {
+    font-size: 12px;
+    line-height: 2.2em;
+    max-width: 640px;
+  }
 
   /* Director sections */
   .director-section { background: #fff; }
@@ -92,35 +99,45 @@ import { images } from '../data/site';
 
   .director-layout {
     display: grid;
-    grid-template-columns: 1fr 280px;
+    grid-template-columns: 1fr 292px;
     gap: clamp(32px, 5vw, 64px);
     align-items: start;
   }
 
   .director-name {
     font-family: var(--font-heading);
-    font-size: clamp(1.6rem, 3vw, 2.2rem);
-    font-weight: 400;
+    font-size: 24px;
+    line-height: 1.2em;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: 0;
     color: var(--text);
-    margin: 0 0 6px;
+    margin: 0 0 8px;
   }
 
   .director-role {
-    font-size: 0.9rem;
-    color: var(--muted);
-    margin-bottom: 24px;
-    font-style: italic;
+    font-family: var(--font-heading);
+    font-size: 16px;
+    line-height: 1.3em;
+    color: var(--text);
+    margin: 0 0 20px;
+    font-style: normal;
+  }
+
+  .director-content p,
+  .director-content .list li {
+    font-size: 12px;
+    line-height: 2.2em;
   }
 
   .expertise-label {
-    font-size: 0.75rem;
+    font-size: 12px;
+    line-height: 2.2em;
     font-weight: 700;
-    letter-spacing: 0.18em;
+    letter-spacing: 0;
     text-transform: uppercase;
     color: var(--text);
-    margin: 24px 0 10px;
+    margin: 20px 0 0;
   }
 
   .director-photo {
@@ -135,21 +152,24 @@ import { images } from '../data/site';
   }
 
   .quote {
+    font-size: 12px;
+    line-height: 2.2em;
     font-style: italic;
     color: var(--muted);
-    border-left: 2px solid currentColor;
-    padding-left: 16px;
     margin-top: 20px;
+    border-left: none;
+    padding-left: 0;
   }
 
   @media (max-width: 700px) {
+    .about-heading { font-size: clamp(2rem, 8vw, 45px); }
     .director-layout {
       grid-template-columns: 1fr;
     }
     .director-photo {
       position: static;
       order: -1;
-      max-width: 240px;
+      max-width: 292px;
     }
   }
 </style>

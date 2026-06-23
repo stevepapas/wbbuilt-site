@@ -17,6 +17,6 @@ export const images = {
   commercial: 'https://static.wixstatic.com/media/c11257_dd9014ea3e944422ac3917a7c84bfc14~mv2.jpg/v1/fill/w_480,h_480,al_c,q_85/c11257_dd9014ea3e944422ac3917a7c84bfc14~mv2.jpg',
   hospitality: 'https://static.wixstatic.com/media/c11257_69f0edc69e7c4972a063473bd5852b8b~mv2.jpg/v1/fill/w_480,h_480,al_c,q_85/c11257_69f0edc69e7c4972a063473bd5852b8b~mv2.jpg',
   multires: 'https://static.wixstatic.com/media/c11257_93c266f5138a4031b7ab7f0421c9974f~mv2.jpg/v1/fill/w_480,h_480,al_c,q_85/c11257_93c266f5138a4031b7ab7f0421c9974f~mv2.jpg',
-  about1: 'https://static.wixstatic.com/media/c11257_b432a59880dd4ea6bb3b3f8a3e561bf7~mv2.png/v1/fill/w_900,h_900,al_c,q_85/c11257_b432a59880dd4ea6bb3b3f8a3e561bf7~mv2.png',
-  about2: 'https://static.wixstatic.com/media/c11257_c53c086655f24805a479c46d840af2d1~mv2.png/v1/fill/w_900,h_900,al_c,q_85/c11257_c53c086655f24805a479c46d840af2d1~mv2.png',
+  about1: 'https://static.wixstatic.com/media/c11257_b432a59880dd4ea6bb3b3f8a3e561bf7~mv2.png/v1/fill/w_584,h_932,al_c,q_85/c11257_b432a59880dd4ea6bb3b3f8a3e561bf7~mv2.png',
+  about2: 'https://static.wixstatic.com/media/c11257_c53c086655f24805a479c46d840af2d1~mv2.png/v1/crop/x_0,y_0,w_922,h_1270/fill/w_616,h_932,al_c,q_85/c11257_c53c086655f24805a479c46d840af2d1~mv2.png',
 };
