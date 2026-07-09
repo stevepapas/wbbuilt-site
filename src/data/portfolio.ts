@@ -23,6 +23,9 @@ export type PortfolioProject = {
   ogImage: string;
   manifestPath: string;
   galleryIntro?: string;
+  reelVideo?: string;
+  reelPoster?: string;
+  reelCaption?: string;
 };
 
 export type PortfolioCategory = {
@@ -103,21 +106,25 @@ export const portfolioProjects: PortfolioProject[] = [
     slug: 'rockley-house',
     categorySlug: 'residential',
     name: 'Rockley House',
-    location: 'South Yarra, Victoria',
+    location: 'Rockley Road, South Yarra, Victoria',
     scope: 'High-end residential home',
     highlights: [
-      'Bespoke residential home in South Yarra',
+      'Bespoke residential home on Rockley Road, South Yarra',
       'Architectural coordination and refined interior finishes',
       'Aerial and interior documentation of completed form',
       'Delivered with precision, care and attention to detail',
     ],
     seoDescription:
-      'Rockley House, South Yarra — high-end residential construction by WB Built, delivered with architectural precision and exceptional finish quality.',
+      'Rockley House, Rockley Road South Yarra — high-end residential construction by WB Built, delivered with architectural precision and exceptional finish quality.',
     cardImage: `${rockleyHouseBase}/meta/card.jpg`,
     cardAlt: 'WB Built residential home at Rockley House, South Yarra',
     heroImage: `${rockleyHouseBase}/meta/hero.jpg`,
     ogImage: `${rockleyHouseBase}/meta/og.jpg`,
     manifestPath: 'images/portfolio/rockley-house-south-yarra/manifest.json',
+    reelVideo: `${rockleyHouseBase}/reel.mp4`,
+    reelPoster: `${rockleyHouseBase}/meta/hero.jpg`,
+    reelCaption:
+      'A short walkthrough of Rockley House — a high-end residential build on Rockley Road, South Yarra.',
     galleryIntro:
       'Browse interior, architectural and aerial photography from Rockley House, South Yarra. Images are optimised for web viewing and ready to share across social channels.',
   },

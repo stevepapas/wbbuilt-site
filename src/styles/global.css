@@ -31,6 +31,13 @@ body {
 
 a { color: inherit; text-decoration: none; }
 img { display: block; max-width: 100%; }
+img.lazy-reveal {
+  opacity: 0;
+  transition: opacity 0.65s ease;
+}
+img.lazy-reveal.is-revealed {
+  opacity: var(--lazy-reveal-opacity, 1);
+}
 main { overflow: hidden; }
 
 .container {

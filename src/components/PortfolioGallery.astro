@@ -59,7 +59,14 @@ const showFilters = hasInterior && hasExterior;
           data-index={index}
           aria-label={`Open image ${index + 1} of ${images.length}`}
         >
-          <img src={assetUrl(image.thumb)} alt={image.alt} loading="lazy" decoding="async" draggable="false" />
+          <img
+            class="lazy-reveal"
+            src={assetUrl(image.thumb)}
+            alt={image.alt}
+            loading="lazy"
+            decoding="async"
+            draggable="false"
+          />
         </button>
         {devMode && (
           <>
@@ -412,6 +419,13 @@ const showFilters = hasInterior && hasExterior;
   });
 </script>
 
+<script>
+  import { initLazyReveal } from '../scripts/lazy-reveal';
+
+  initLazyReveal();
+  document.addEventListener('astro:page-load', () => initLazyReveal());
+</script>
+
 <style>
   .gallery-dev-toolbar {
     display: flex;
@@ -544,11 +558,11 @@ const showFilters = hasInterior && hasExterior;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.35s ease, opacity 0.35s ease;
-    opacity: 0.92;
+    transition: transform 0.35s ease, opacity 0.65s ease;
+    --lazy-reveal-opacity: 0.92;
     pointer-events: none;
   }
-  .gallery-item:hover img {
+  .gallery-item:hover img.is-revealed {
     transform: scale(1.03);
     opacity: 1;
   }

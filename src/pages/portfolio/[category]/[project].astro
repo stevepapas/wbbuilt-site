@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import PortfolioHero from '../../../components/PortfolioHero.astro';
+import PortfolioReel from '../../../components/PortfolioReel.astro';
 import PortfolioGallery from '../../../components/PortfolioGallery.astro';
 import {
   portfolioProjects,
@@ -106,7 +107,18 @@ const structuredData = {
           {project.highlights.map((item) => <li>{item}</li>)}
         </ul>
       </div>
+    </div>
 
+    {project.reelVideo && (
+      <PortfolioReel
+        src={project.reelVideo}
+        poster={project.reelPoster}
+        title={`${project.name} project reel`}
+        caption={project.reelCaption}
+      />
+    )}
+
+    <div class="container">
       <div class="gallery-intro">
         <h2>Project gallery</h2>
         <p>{project.galleryIntro}</p>
