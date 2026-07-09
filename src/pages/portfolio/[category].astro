@@ -1,0 +1,110 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PortfolioHero from '../../components/PortfolioHero.astro';
+import PortfolioProjectList from '../../components/PortfolioProjectList.astro';
+import { portfolioCategories, getPortfolioCategory, getProjectsByCategory } from '../../data/portfolio';
+import { withBase } from '../../utils/paths';
+import { absoluteUrl } from '../../utils/seo';
+
+export function getStaticPaths() {
+  return portfolioCategories.map((category) => ({
+    params: { category: category.slug },
+  }));
+}
+
+const { category: slug } = Astro.params;
+const category = getPortfolioCategory(slug!);
+
+if (!category) {
+  return Astro.redirect(withBase('/portfolio'));
+}
+
+const projects = getProjectsByCategory(category.slug);
+const pageTitle = `${category.title} | WB Built Melbourne`;
+const description = category.seoDescription;
+const ogImage = category.heroImage ?? category.cardImage;
+const canonicalPath = `/portfolio/${category.slug}`;
+const canonical = absoluteUrl(canonicalPath, Astro.site!);
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: category.title,
+  description,
+  url: canonical,
+};
+---
+<BaseLayout
+  title={pageTitle}
+  description={description}
+  ogImage={ogImage}
+  canonical={canonical}
+  structuredData={structuredData}
+>
+  <PortfolioHero
+    title={category.title}
+    eyebrow={category.shortTitle}
+    image={category.heroImage ?? category.cardImage}
+    imageAlt={category.cardAlt}
+  />
+
+  <section class="section">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href={withBase('/portfolio')}>Portfolio</a>
+        <span aria-hidden="true">/</span>
+        <span>{category.shortTitle}</span>
+      </nav>
+
+      <div class="intro">
+        <p class="lead">{category.description}</p>
+      </div>
+
+      <div class="projects-header">
+        <h2>Projects</h2>
+        <p>Select a project to view photography and project details.</p>
+      </div>
+
+      <PortfolioProjectList
+        projects={projects}
+        categorySlug={category.slug}
+        emptyMessage={`We're preparing selected ${category.shortTitle.toLowerCase()} project photography and case studies for this section. Check back soon, or get in touch to discuss your project.`}
+      />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    font-size: 0.82rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 28px;
+  }
+  .breadcrumb a:hover { color: var(--text); }
+  .intro {
+    max-width: 760px;
+    margin-bottom: clamp(40px, 6vw, 56px);
+  }
+  .lead {
+    font-size: 1.08rem;
+    line-height: 1.7;
+    margin: 0;
+  }
+  .projects-header {
+    margin-bottom: 24px;
+  }
+  .projects-header h2 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    margin-bottom: 8px;
+  }
+  .projects-header p {
+    margin: 0;
+    color: var(--muted);
+  }
+</style>

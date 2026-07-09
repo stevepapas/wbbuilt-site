@@ -1,26 +1,31 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
-import { images } from '../data/site';
-
-const categories = [
-  { title: 'WB BUILT RESIDENTIAL', img: images.residential, alt: 'WB BUILT RESIDENTIAL' },
-  { title: 'WB BUILT COMMERCIAL', img: images.commercial, alt: 'WB BUILT COMMERCIAL' },
-  { title: 'WB BUILT HOSPITALITY', img: images.hospitality, alt: 'WB BUILT HOSPITALITY' },
-  { title: 'WB BUILT MULTI-RES', img: images.multires, alt: 'WB BUILT MULTI-RES' },
-];
+import { portfolioCategories, portfolioIndexDescription } from '../data/portfolio';
+import { assetUrl, withBase } from '../utils/paths';
 ---
-<BaseLayout title="PORTFOLIO | WB Built Melbourne">
+<BaseLayout
+  title="Portfolio | WB Built Melbourne"
+  description={portfolioIndexDescription}
+>
   <Hero />
 
   <section class="section">
     <div class="container">
+      <div class="portfolio-intro">
+        <p class="eyebrow">Our work</p>
+        <h2>Selected projects across Melbourne</h2>
+        <p>{portfolioIndexDescription}</p>
+      </div>
       <div class="portfolio-grid">
-        {categories.map(({ title, img, alt }) => (
-          <article class="portfolio-card">
-            <img src={img} alt={alt} loading="lazy" />
-            <div class="portfolio-label">{title}</div>
-          </article>
+        {portfolioCategories.map(({ slug, title, cardImage, cardAlt }) => (
+          <a class="portfolio-card" href={withBase(`/portfolio/${slug}`)}>
+            <img src={assetUrl(cardImage)} alt={cardAlt} loading="lazy" />
+            <div class="portfolio-label">
+              <span class="portfolio-cta">View <span aria-hidden="true">→</span></span>
+              <span>{title}</span>
+            </div>
+          </a>
         ))}
       </div>
     </div>
@@ -28,6 +33,19 @@ const categories = [
 </BaseLayout>
 
 <style>
+  .portfolio-intro {
+    max-width: 720px;
+    margin: 0 auto 40px;
+    text-align: center;
+  }
+  .portfolio-intro h2 {
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    margin-bottom: 12px;
+  }
+  .portfolio-intro p {
+    margin: 0;
+    color: var(--muted);
+  }
   .portfolio-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -40,6 +58,7 @@ const categories = [
     aspect-ratio: 1 / 1;
     overflow: hidden;
     background: #111;
+    display: block;
   }
   .portfolio-card img {
     width: 100%;
@@ -53,8 +72,10 @@ const categories = [
     position: absolute;
     inset: 0;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 10px;
     font-family: var(--font-heading);
     font-size: 0.72rem;
     font-weight: 400;
@@ -63,6 +84,35 @@ const categories = [
     color: #fff;
     text-align: center;
     padding: 16px;
+    text-shadow: 0 1px 12px rgba(0, 0, 0, 0.65), 0 1px 3px rgba(0, 0, 0, 0.85);
+    z-index: 1;
+  }
+  .portfolio-label::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at center, rgba(0, 0, 0, 0.17) 0%, rgba(0, 0, 0, 0.07) 72%),
+      linear-gradient(180deg, rgba(0, 0, 0, 0.11) 0%, rgba(0, 0, 0, 0.21) 100%);
+    pointer-events: none;
+    z-index: -1;
+    transition: background 0.35s ease;
+  }
+  .portfolio-card:hover .portfolio-label::before {
+    background:
+      radial-gradient(ellipse at center, rgba(0, 0, 0, 0.21) 0%, rgba(0, 0, 0, 0.1) 72%),
+      linear-gradient(180deg, rgba(0, 0, 0, 0.14) 0%, rgba(0, 0, 0, 0.25) 100%);
+  }
+  .portfolio-cta {
+    font-size: 0.62rem;
+    letter-spacing: 0.24em;
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  .portfolio-card:hover .portfolio-cta {
+    opacity: 1;
+    transform: translateY(0);
   }
   @media (max-width: 480px) {
     .portfolio-grid { grid-template-columns: 1fr; max-width: 320px; }

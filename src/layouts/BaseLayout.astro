@@ -2,11 +2,20 @@
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
+import { absoluteUrl } from '../utils/seo';
 
 const {
   title = 'WB Built',
   description = 'High-end residential, multi-residential and commercial construction across Melbourne.',
+  ogImage,
+  ogType = 'website',
+  canonical,
+  structuredData,
+  noindex = false,
 } = Astro.props;
+
+const resolvedCanonical = canonical ?? absoluteUrl(Astro.url.pathname, Astro.site!);
+const resolvedOgImage = ogImage ? absoluteUrl(ogImage, Astro.site!) : undefined;
 ---
 <!doctype html>
 <html lang="en-AU">
@@ -14,7 +23,24 @@ const {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
     <title>{title}</title>
+    <link rel="canonical" href={resolvedCanonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={resolvedCanonical} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content="WB Built" />
+    <meta property="og:locale" content="en_AU" />
+    {resolvedOgImage && <meta property="og:image" content={resolvedOgImage} />}
+    {resolvedOgImage && <meta property="og:image:alt" content={title} />}
+    <meta name="twitter:card" content={resolvedOgImage ? 'summary_large_image' : 'summary'} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    {resolvedOgImage && <meta name="twitter:image" content={resolvedOgImage} />}
+    {structuredData && (
+      <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+    )}
     <link rel="icon" href="https://static.wixstatic.com/shapes/0c8b36_c28c8718944d46d5a1c891d140877031.svg" type="image/svg+xml" />
   </head>
   <body>

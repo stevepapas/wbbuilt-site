@@ -1,0 +1,176 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import PortfolioHero from '../../../components/PortfolioHero.astro';
+import PortfolioGallery from '../../../components/PortfolioGallery.astro';
+import {
+  portfolioProjects,
+  getPortfolioCategory,
+  getPortfolioProject,
+} from '../../../data/portfolio';
+import type { PortfolioImage } from '../../../data/portfolio';
+import { assetUrl, withBase } from '../../../utils/paths';
+import { absoluteUrl } from '../../../utils/seo';
+import { normalizeGalleryKind, sortGalleryImages } from '../../../utils/gallery';
+import fs from 'node:fs';
+import path from 'node:path';
+
+export function getStaticPaths() {
+  return portfolioProjects.map((project) => ({
+    params: { category: project.categorySlug, project: project.slug },
+  }));
+}
+
+const { category: categorySlug, project: projectSlug } = Astro.params;
+const category = getPortfolioCategory(categorySlug!);
+const project = getPortfolioProject(categorySlug!, projectSlug!);
+
+if (!category || !project) {
+  return Astro.redirect(withBase('/portfolio'));
+}
+
+const manifestPath = path.join(process.cwd(), 'public', project.manifestPath);
+const allGalleryImages: PortfolioImage[] = sortGalleryImages(
+  JSON.parse(fs.readFileSync(manifestPath, 'utf-8')).map(
+    (image: PortfolioImage & { kind?: string }) => ({
+      ...image,
+      kind: normalizeGalleryKind(image.kind),
+      hidden: Boolean(image.hidden),
+      thumb: assetUrl(image.thumb),
+      full: assetUrl(image.full),
+    }),
+  ),
+);
+const galleryImages = import.meta.env.DEV
+  ? allGalleryImages
+  : allGalleryImages.filter((image) => !image.hidden);
+
+const pageTitle = `${project.name} | WB Built Melbourne`;
+const description = project.seoDescription;
+const canonicalPath = `/portfolio/${category.slug}/${project.slug}`;
+const canonical = absoluteUrl(canonicalPath, Astro.site!);
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'CreativeWork',
+  name: project.name,
+  description,
+  image: absoluteUrl(project.ogImage, Astro.site!),
+  locationCreated: {
+    '@type': 'Place',
+    name: project.location,
+  },
+  creator: {
+    '@type': 'Organization',
+    name: 'WB Built',
+    url: Astro.site,
+  },
+};
+---
+<BaseLayout
+  title={pageTitle}
+  description={description}
+  ogImage={project.ogImage}
+  ogType="article"
+  canonical={canonical}
+  structuredData={structuredData}
+>
+  <PortfolioHero
+    title={project.name}
+    eyebrow={category.shortTitle}
+    image={project.heroImage}
+    imageAlt={project.cardAlt}
+  />
+
+  <section class="section">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href={withBase('/portfolio')}>Portfolio</a>
+        <span aria-hidden="true">/</span>
+        <a href={withBase(`/portfolio/${category.slug}`)}>{category.shortTitle}</a>
+        <span aria-hidden="true">/</span>
+        <span>{project.name}</span>
+      </nav>
+
+      <div class="intro">
+        <div class="project-meta">
+          <div>
+            <p class="meta-label">Location</p>
+            <p>{project.location}</p>
+          </div>
+          <div>
+            <p class="meta-label">Scope</p>
+            <p>{project.scope}</p>
+          </div>
+        </div>
+        <ul class="highlights">
+          {project.highlights.map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
+
+      <div class="gallery-intro">
+        <h2>Project gallery</h2>
+        <p>{project.galleryIntro}</p>
+      </div>
+      <PortfolioGallery
+        images={galleryImages}
+        galleryId={`${category.slug}-${project.slug}`}
+        manifestPath={project.manifestPath}
+      />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    font-size: 0.82rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 28px;
+  }
+  .breadcrumb a:hover { color: var(--text); }
+  .intro {
+    max-width: 760px;
+    margin-bottom: clamp(40px, 6vw, 64px);
+  }
+  .project-meta {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+  .meta-label {
+    font-family: var(--font-heading);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 8px;
+  }
+  .project-meta p:last-child { margin: 0; }
+  .highlights {
+    margin: 0;
+    padding-left: 1.1rem;
+    color: var(--muted);
+  }
+  .highlights li + li { margin-top: 8px; }
+  .gallery-intro {
+    margin-bottom: 24px;
+  }
+  .gallery-intro h2 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    margin-bottom: 10px;
+  }
+  .gallery-intro p {
+    margin: 0;
+    color: var(--muted);
+    max-width: 720px;
+  }
+  @media (max-width: 640px) {
+    .project-meta { grid-template-columns: 1fr; }
+  }
+</style>

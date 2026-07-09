@@ -1,0 +1,134 @@
+---
+import type { PortfolioProject } from '../data/portfolio';
+import { assetUrl, withBase } from '../utils/paths';
+
+interface Props {
+  projects: PortfolioProject[];
+  categorySlug: string;
+  emptyMessage: string;
+}
+
+const { projects, categorySlug, emptyMessage } = Astro.props;
+---
+{projects.length > 0 ? (
+  <div class="project-grid">
+    {projects.map((project) => (
+      <a class="project-card" href={withBase(`/portfolio/${categorySlug}/${project.slug}`)}>
+        <img src={assetUrl(project.cardImage)} alt={project.cardAlt} loading="lazy" />
+        <div class="project-label">
+          <span class="project-cta">View <span aria-hidden="true">→</span></span>
+          <span class="project-name">{project.name}</span>
+          <span class="project-location">{project.location}</span>
+        </div>
+      </a>
+    ))}
+  </div>
+) : (
+  <div class="empty-state">
+    <p class="eyebrow">Coming soon</p>
+    <h2>More projects on the way</h2>
+    <p>{emptyMessage}</p>
+  </div>
+)}
+
+<style>
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    max-width: var(--max);
+  }
+  .project-card {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: #111;
+    display: block;
+  }
+  .project-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.35s ease;
+    opacity: 0.8;
+  }
+  .project-card:hover img {
+    transform: scale(1.03);
+    opacity: 0.68;
+  }
+  .project-label {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-align: center;
+    padding: 16px;
+    color: #fff;
+    text-shadow: 0 1px 12px rgba(0, 0, 0, 0.65), 0 1px 3px rgba(0, 0, 0, 0.85);
+    z-index: 1;
+  }
+  .project-label::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at center, rgba(0, 0, 0, 0.17) 0%, rgba(0, 0, 0, 0.07) 72%),
+      linear-gradient(180deg, rgba(0, 0, 0, 0.11) 0%, rgba(0, 0, 0, 0.21) 100%);
+    pointer-events: none;
+    z-index: -1;
+    transition: background 0.35s ease;
+  }
+  .project-card:hover .project-label::before {
+    background:
+      radial-gradient(ellipse at center, rgba(0, 0, 0, 0.21) 0%, rgba(0, 0, 0, 0.1) 72%),
+      linear-gradient(180deg, rgba(0, 0, 0, 0.14) 0%, rgba(0, 0, 0, 0.25) 100%);
+  }
+  .project-name {
+    font-family: var(--font-heading);
+    font-size: 0.78rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    position: relative;
+  }
+  .project-location {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    opacity: 0.88;
+  }
+  .project-cta {
+    font-family: var(--font-heading);
+    font-size: 0.62rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  .project-card:hover .project-cta {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .empty-state {
+    border: 1px solid var(--line);
+    background: var(--bg-alt);
+    padding: clamp(28px, 5vw, 48px);
+    max-width: 720px;
+  }
+  .empty-state h2 {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    margin-bottom: 12px;
+  }
+  .empty-state p {
+    margin: 0;
+    color: var(--muted);
+  }
+  @media (max-width: 900px) {
+    .project-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .project-grid { grid-template-columns: 1fr; }
+  }
+</style>

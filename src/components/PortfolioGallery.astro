@@ -1,0 +1,671 @@
+---
+import { assetUrl } from '../utils/paths';
+import type { PortfolioImage } from '../data/portfolio';
+
+interface Props {
+  images: PortfolioImage[];
+  galleryId: string;
+  manifestPath?: string;
+}
+
+const { images, galleryId, manifestPath } = Astro.props;
+const devMode = import.meta.env.DEV && Boolean(manifestPath);
+
+const hasInterior = images.some((image) => image.kind === 'interior');
+const hasExterior = images.some((image) => image.kind === 'exterior');
+const showFilters = hasInterior && hasExterior;
+---
+<div
+  class:list={['gallery', devMode && 'gallery--dev']}
+  data-gallery={galleryId}
+  data-manifest-path={manifestPath}
+  data-dev-mode={devMode ? 'true' : 'false'}
+>
+  {devMode && (
+    <div class="gallery-dev-toolbar">
+      <button
+        type="button"
+        class="gallery-edit-toggle"
+        aria-pressed="false"
+      >
+        Edit gallery
+      </button>
+      <p class="gallery-dev-note" hidden>
+        Drag thumbnails to reorder. Set Interior / Exterior type and hide photos from the live site. Changes save automatically.
+      </p>
+    </div>
+  )}
+
+  {showFilters && (
+    <div class="gallery-filters" role="tablist" aria-label="Filter project photos">
+      <button type="button" class="gallery-filter is-active" data-filter="all" role="tab" aria-selected="true">All</button>
+      <button type="button" class="gallery-filter" data-filter="interior" role="tab" aria-selected="false">Interiors</button>
+      <button type="button" class="gallery-filter" data-filter="exterior" role="tab" aria-selected="false">Exterior</button>
+    </div>
+  )}
+
+  <div class="gallery-grid">
+    {images.map((image, index) => (
+      <div
+        class:list={['gallery-item-wrap', devMode && image.hidden && 'is-hidden-live']}
+        data-index={index}
+        data-kind={image.kind}
+        data-id={image.id}
+        draggable="false"
+      >
+        <button
+          type="button"
+          class="gallery-item"
+          data-index={index}
+          aria-label={`Open image ${index + 1} of ${images.length}`}
+        >
+          <img src={assetUrl(image.thumb)} alt={image.alt} loading="lazy" decoding="async" draggable="false" />
+        </button>
+        {devMode && (
+          <>
+            <div class="gallery-kind-controls" role="group" aria-label={`Set photo type for image ${index + 1}`}>
+              <button type="button" class:list={['kind-btn', image.kind === 'interior' && 'is-active']} data-kind="interior">Interior</button>
+              <button type="button" class:list={['kind-btn', image.kind === 'exterior' && 'is-active']} data-kind="exterior">Exterior</button>
+            </div>
+            <label class="gallery-hide-control" title="Hide from live site">
+              <input type="checkbox" class="hide-checkbox" checked={image.hidden} />
+              <span>Hide</span>
+            </label>
+          </>
+        )}
+      </div>
+    ))}
+  </div>
+
+  <p class="gallery-save-status" hidden aria-live="polite"></p>
+
+  <dialog class="lightbox" aria-label="Project image viewer">
+    <button type="button" class="lightbox-close" aria-label="Close image viewer">&times;</button>
+    <button type="button" class="lightbox-nav lightbox-prev" aria-label="Previous image">&#8592;</button>
+    <figure class="lightbox-figure">
+      <img class="lightbox-image" src="" alt="" />
+      <figcaption class="lightbox-caption"></figcaption>
+    </figure>
+    <button type="button" class="lightbox-nav lightbox-next" aria-label="Next image">&#8594;</button>
+  </dialog>
+</div>
+
+<script define:vars={{ images, galleryId, manifestPath, devMode }}>
+  function initGallery(root) {
+    if (!root || root.dataset.ready === 'true') return;
+    root.dataset.ready = 'true';
+
+    let galleryImages = images.map((image) => ({ ...image }));
+    const isDev = root.dataset.devMode === 'true';
+    const manifest = root.dataset.manifestPath || manifestPath;
+
+    const grid = root.querySelector('.gallery-grid');
+    const filters = Array.from(root.querySelectorAll('.gallery-filter'));
+    const statusEl = root.querySelector('.gallery-save-status');
+    const editToggle = root.querySelector('.gallery-edit-toggle');
+    const devNote = root.querySelector('.gallery-dev-note');
+    const dialog = root.querySelector('.lightbox');
+    const imageEl = root.querySelector('.lightbox-image');
+    const captionEl = root.querySelector('.lightbox-caption');
+    const closeBtn = root.querySelector('.lightbox-close');
+    const prevBtn = root.querySelector('.lightbox-prev');
+    const nextBtn = root.querySelector('.lightbox-next');
+
+    let wraps = Array.from(root.querySelectorAll('.gallery-item-wrap'));
+    let currentIndex = 0;
+    let activeFilter = 'all';
+    let draggedId = null;
+    let dragMoved = false;
+
+    function normalizeGalleryOrder(list) {
+      const interior = [];
+      const exterior = [];
+      for (const image of list) {
+        if (image.kind === 'exterior') exterior.push(image);
+        else interior.push(image);
+      }
+      return [...interior, ...exterior];
+    }
+
+    const initialOrder = images.map((image) => image.id).join('|');
+    galleryImages = normalizeGalleryOrder(galleryImages);
+
+    function isEditing() {
+      return root.classList.contains('gallery--editing');
+    }
+
+    function setEditing(editing) {
+      root.classList.toggle('gallery--editing', editing);
+      if (editToggle) {
+        editToggle.textContent = editing ? 'Done editing' : 'Edit gallery';
+        editToggle.setAttribute('aria-pressed', editing ? 'true' : 'false');
+      }
+      if (devNote) devNote.hidden = !editing;
+      wraps.forEach((wrap) => {
+        wrap.draggable = editing ? 'true' : 'false';
+      });
+    }
+
+    function activeKind() {
+      return root.querySelector('.gallery-filter.is-active')?.dataset.filter || 'all';
+    }
+
+    function visibleWraps() {
+      return wraps.filter((wrap) => {
+        if (activeFilter === 'all') return true;
+        return wrap.dataset.kind === activeFilter;
+      });
+    }
+
+    function imageIndexForId(id) {
+      return galleryImages.findIndex((image) => image.id === id);
+    }
+
+    function updateVisibility() {
+      activeFilter = activeKind();
+      wraps.forEach((wrap) => {
+        const show = activeFilter === 'all' || wrap.dataset.kind === activeFilter;
+        wrap.hidden = !show;
+      });
+    }
+
+    function syncWrapFromImage(wrap, image, index) {
+      wrap.dataset.index = String(index);
+      wrap.dataset.kind = image.kind;
+      wrap.dataset.id = image.id;
+      wrap.classList.toggle('is-hidden-live', Boolean(image.hidden));
+      wrap.querySelector('.gallery-item').dataset.index = String(index);
+      const kindControls = wrap.querySelector('.gallery-kind-controls');
+      if (kindControls) {
+        kindControls.querySelectorAll('.kind-btn').forEach((btn) => {
+          btn.classList.toggle('is-active', btn.dataset.kind === image.kind);
+        });
+      }
+      const hideCheckbox = wrap.querySelector('.hide-checkbox');
+      if (hideCheckbox) hideCheckbox.checked = Boolean(image.hidden);
+    }
+
+    function renderGrid() {
+      const orderedWraps = galleryImages.map((image) => {
+        const wrap = wraps.find((node) => node.dataset.id === image.id);
+        return wrap;
+      }).filter(Boolean);
+
+      orderedWraps.forEach((wrap, index) => {
+        syncWrapFromImage(wrap, galleryImages[index], index);
+        grid.appendChild(wrap);
+      });
+
+      wraps = Array.from(root.querySelectorAll('.gallery-item-wrap'));
+      updateVisibility();
+      bindWrapEvents();
+    }
+
+    async function saveGallery() {
+      if (!isDev || !manifest) return;
+
+      galleryImages = normalizeGalleryOrder(galleryImages);
+      renderGrid();
+
+      statusEl.hidden = false;
+      statusEl.textContent = 'Saving order…';
+
+      const kinds = Object.fromEntries(galleryImages.map((image) => [image.id, image.kind]));
+      const hidden = Object.fromEntries(galleryImages.map((image) => [image.id, Boolean(image.hidden)]));
+
+      try {
+        const response = await fetch('/api/dev/reorder-gallery', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            manifestPath: manifest,
+            order: galleryImages.map((image) => image.id),
+            kinds,
+            hidden,
+          }),
+        });
+
+        if (!response.ok) throw new Error('Save failed');
+        statusEl.textContent = 'Order saved to manifest.';
+      } catch {
+        statusEl.textContent = 'Could not save order. Is the dev server running?';
+      }
+    }
+
+    function reorderWithinFilter(draggedImageId, targetImageId) {
+      if (draggedImageId === targetImageId) return;
+
+      if (activeFilter === 'all') {
+        const from = imageIndexForId(draggedImageId);
+        const to = imageIndexForId(targetImageId);
+        if (from < 0 || to < 0) return;
+        const [moved] = galleryImages.splice(from, 1);
+        galleryImages.splice(to, 0, moved);
+        galleryImages = normalizeGalleryOrder(galleryImages);
+        return;
+      }
+
+      const subset = galleryImages.filter((image) => image.kind === activeFilter);
+      const from = subset.findIndex((image) => image.id === draggedImageId);
+      const to = subset.findIndex((image) => image.id === targetImageId);
+      if (from < 0 || to < 0) return;
+
+      const [moved] = subset.splice(from, 1);
+      subset.splice(to, 0, moved);
+
+      let cursor = 0;
+      galleryImages = galleryImages.map((image) => {
+        if (image.kind !== activeFilter) return image;
+        const next = subset[cursor];
+        cursor += 1;
+        return next;
+      });
+      galleryImages = normalizeGalleryOrder(galleryImages);
+    }
+
+    function openAt(index) {
+      const item = galleryImages[index];
+      if (!item) return;
+      currentIndex = index;
+      imageEl.src = item.full;
+      imageEl.alt = item.alt;
+      captionEl.textContent = item.alt;
+      dialog.showModal();
+    }
+
+    function showRelative(step) {
+      const visible = visibleWraps();
+      if (!visible.length) return;
+      const currentId = galleryImages[currentIndex]?.id;
+      const visibleIndex = visible.findIndex((wrap) => wrap.dataset.id === currentId);
+      const baseIndex = visibleIndex >= 0 ? visibleIndex : 0;
+      const nextWrap = visible[(baseIndex + step + visible.length) % visible.length];
+      const nextIndex = imageIndexForId(nextWrap.dataset.id);
+      if (nextIndex >= 0) openAt(nextIndex);
+    }
+
+    function bindWrapEvents() {
+      wraps.forEach((wrap) => {
+        const openBtn = wrap.querySelector('.gallery-item');
+        const id = wrap.dataset.id;
+
+        openBtn.onclick = () => {
+          if (dragMoved) {
+            dragMoved = false;
+            return;
+          }
+          const index = imageIndexForId(id);
+          if (index >= 0) openAt(index);
+        };
+
+        if (!isDev) return;
+
+        wrap.draggable = isEditing() ? 'true' : 'false';
+
+        wrap.ondragstart = (event) => {
+          if (!isEditing()) return;
+          draggedId = id;
+          dragMoved = false;
+          wrap.classList.add('is-dragging');
+          event.dataTransfer?.setData('text/plain', id);
+          if (event.dataTransfer) event.dataTransfer.effectAllowed = 'move';
+        };
+
+        wrap.ondragend = () => {
+          wrap.classList.remove('is-dragging');
+          wraps.forEach((node) => node.classList.remove('is-drop-target'));
+          draggedId = null;
+        };
+
+        wrap.ondragover = (event) => {
+          if (!isEditing()) return;
+          if (!draggedId || draggedId === id) return;
+          if (activeFilter !== 'all') {
+            const draggedKind = galleryImages.find((image) => image.id === draggedId)?.kind;
+            if (draggedKind !== activeFilter) return;
+          }
+          event.preventDefault();
+          wrap.classList.add('is-drop-target');
+        };
+
+        wrap.ondragleave = () => {
+          wrap.classList.remove('is-drop-target');
+        };
+
+        wrap.ondrop = (event) => {
+          if (!isEditing()) return;
+          event.preventDefault();
+          wrap.classList.remove('is-drop-target');
+          if (!draggedId || draggedId === id) return;
+          reorderWithinFilter(draggedId, id);
+          dragMoved = true;
+          renderGrid();
+          saveGallery();
+        };
+
+        wrap.querySelectorAll('.kind-btn').forEach((btn) => {
+          btn.onclick = (event) => {
+            event.stopPropagation();
+            const index = imageIndexForId(id);
+            if (index < 0) return;
+            galleryImages[index].kind = btn.dataset.kind;
+            renderGrid();
+            saveGallery();
+          };
+        });
+
+        const hideCheckbox = wrap.querySelector('.hide-checkbox');
+        if (hideCheckbox) {
+          hideCheckbox.onchange = (event) => {
+            event.stopPropagation();
+            const index = imageIndexForId(id);
+            if (index < 0) return;
+            galleryImages[index].hidden = hideCheckbox.checked;
+            renderGrid();
+            saveGallery();
+          };
+        }
+      });
+    }
+
+    filters.forEach((filter) => {
+      filter.addEventListener('click', () => {
+        filters.forEach((btn) => {
+          btn.classList.toggle('is-active', btn === filter);
+          btn.setAttribute('aria-selected', btn === filter ? 'true' : 'false');
+        });
+        updateVisibility();
+      });
+    });
+
+    editToggle?.addEventListener('click', () => {
+      setEditing(!isEditing());
+    });
+
+    closeBtn.addEventListener('click', () => dialog.close());
+    prevBtn.addEventListener('click', () => showRelative(-1));
+    nextBtn.addEventListener('click', () => showRelative(1));
+
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+
+    dialog.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft') showRelative(-1);
+      if (event.key === 'ArrowRight') showRelative(+1);
+      if (event.key === 'Escape') dialog.close();
+    });
+
+    renderGrid();
+
+    if (isDev && galleryImages.map((image) => image.id).join('|') !== initialOrder) {
+      saveGallery();
+    }
+  }
+
+  document.querySelectorAll('[data-gallery]').forEach(initGallery);
+  document.addEventListener('astro:page-load', () => {
+    document.querySelectorAll('[data-gallery]').forEach((root) => {
+      root.dataset.ready = 'false';
+      initGallery(root);
+    });
+  });
+</script>
+
+<style>
+  .gallery-dev-toolbar {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .gallery-edit-toggle {
+    align-self: flex-start;
+    border: 1px solid var(--line);
+    background: #fff;
+    color: var(--text);
+    font-family: var(--font-heading);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+  .gallery-edit-toggle:hover,
+  .gallery-edit-toggle[aria-pressed='true'] {
+    background: var(--text);
+    color: #fff;
+    border-color: var(--text);
+  }
+  .gallery-dev-note {
+    margin: 0;
+    padding: 12px 14px;
+    background: #fff8e6;
+    border: 1px solid #ead9a5;
+    color: #5d5a51;
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+  .gallery--editing {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    padding: 24px clamp(12px, 2vw, 28px) 36px;
+    background: #f3f2ef;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .gallery--editing .gallery-dev-toolbar {
+    width: min(var(--max), calc(100% - 48px));
+    margin: 0 auto 20px;
+  }
+  .gallery--editing .gallery-filters,
+  .gallery--editing .gallery-grid,
+  .gallery--editing .gallery-save-status {
+    width: min(100%, calc(100vw - clamp(24px, 4vw, 56px)));
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .gallery-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+  .gallery-filter {
+    border: 1px solid var(--line);
+    background: #fff;
+    color: var(--text);
+    font-family: var(--font-heading);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+  .gallery-filter:hover,
+  .gallery-filter.is-active {
+    background: var(--text);
+    color: #fff;
+    border-color: var(--text);
+  }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .gallery--editing .gallery-grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 6px;
+  }
+  .gallery-item-wrap {
+    display: grid;
+    gap: 8px;
+  }
+  .gallery--editing .gallery-item {
+    cursor: grab;
+  }
+  .gallery--editing .gallery-item:hover img {
+    transform: none;
+  }
+  .gallery--dev:not(.gallery--editing) .gallery-kind-controls,
+  .gallery--dev:not(.gallery--editing) .gallery-hide-control {
+    display: none;
+  }
+  .gallery-item-wrap[hidden] {
+    display: none;
+  }
+  .gallery-item {
+    border: 0;
+    padding: 0;
+    background: #111;
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    cursor: zoom-in;
+    width: 100%;
+  }
+  .gallery--dev.gallery--editing .gallery-item-wrap[draggable='true'] .gallery-item {
+    cursor: grab;
+  }
+  .gallery--dev.gallery--editing .gallery-item-wrap.is-dragging .gallery-item {
+    cursor: grabbing;
+    opacity: 0.55;
+  }
+  .gallery-item-wrap.is-drop-target .gallery-item {
+    outline: 2px solid var(--text);
+    outline-offset: 2px;
+  }
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.35s ease, opacity 0.35s ease;
+    opacity: 0.92;
+    pointer-events: none;
+  }
+  .gallery-item:hover img {
+    transform: scale(1.03);
+    opacity: 1;
+  }
+  .gallery-kind-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .gallery--editing .gallery-kind-controls {
+    gap: 3px;
+  }
+  .kind-btn {
+    border: 1px solid var(--line);
+    background: #fff;
+    color: var(--muted);
+    font-family: var(--font-heading);
+    font-size: 0.58rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 6px 8px;
+    cursor: pointer;
+  }
+  .gallery--editing .kind-btn {
+    font-size: 0.5rem;
+    letter-spacing: 0.08em;
+    padding: 4px 2px;
+  }
+  .kind-btn.is-active {
+    background: var(--text);
+    border-color: var(--text);
+    color: #fff;
+  }
+  .gallery-hide-control {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    line-height: 1.35;
+    cursor: pointer;
+    user-select: none;
+  }
+  .gallery--editing .gallery-hide-control {
+    gap: 4px;
+    font-size: 0.5rem;
+    justify-content: center;
+  }
+  .gallery-hide-control input {
+    margin: 2px 0 0;
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+  .gallery-item-wrap.is-hidden-live .gallery-item img {
+    opacity: 0.35;
+    filter: grayscale(0.4);
+  }
+  .gallery-item-wrap.is-hidden-live .gallery-item {
+    outline: 2px dashed #c9a227;
+    outline-offset: -2px;
+  }
+  .gallery-save-status {
+    margin: 14px 0 0;
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+  .lightbox {
+    width: min(1200px, calc(100vw - 32px));
+    max-width: none;
+    max-height: calc(100vh - 32px);
+    border: 0;
+    padding: 0;
+    background: rgba(0, 0, 0, 0.94);
+    color: #fff;
+  }
+  .lightbox::backdrop { background: rgba(0, 0, 0, 0.75); }
+  .lightbox-figure {
+    margin: 0;
+    display: grid;
+    gap: 12px;
+    padding: 56px 64px 24px;
+  }
+  .lightbox-image {
+    width: 100%;
+    max-height: calc(100vh - 180px);
+    object-fit: contain;
+    margin: 0 auto;
+  }
+  .lightbox-caption {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.82);
+    text-align: center;
+  }
+  .lightbox-close,
+  .lightbox-nav {
+    position: absolute;
+    border: 0;
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+    font-size: 2rem;
+    line-height: 1;
+    padding: 8px 12px;
+  }
+  .lightbox-close { top: 8px; right: 8px; }
+  .lightbox-prev { top: 50%; left: 8px; transform: translateY(-50%); }
+  .lightbox-next { top: 50%; right: 8px; transform: translateY(-50%); }
+  @media (max-width: 900px) {
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .gallery--editing .gallery-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+    .lightbox-figure { padding: 48px 40px 20px; }
+  }
+  @media (max-width: 560px) {
+    .gallery-grid { grid-template-columns: 1fr; }
+    .gallery--editing .gallery-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .lightbox-figure { padding: 44px 16px 16px; }
+  }
+</style>
