@@ -1,5 +1,3 @@
-import { images } from './site';
-
 export type PortfolioImage = {
   id: string;
   thumb: string;
@@ -44,12 +42,29 @@ const kerrStBase = '/images/portfolio/kerr-st-fitzroy';
 const rockleyHouseBase = '/images/portfolio/rockley-house-south-yarra';
 const hawthornGardenHouseBase = '/images/portfolio/hawthorn-garden-house';
 const middleParkBase = '/images/portfolio/middle-park';
+const armstrongHouseBase = '/images/portfolio/armstrong-house-albert-park';
+const oxfordHouseBase = '/images/portfolio/oxford-house-newport';
+const salfordHouseBase = '/images/portfolio/salford-house-balwyn';
+const silverHouseBase = '/images/portfolio/silver-house-eltham';
+const sunburyHouseBase = '/images/portfolio/sunbury-house';
 const malvernEastBase = '/images/portfolio/malvern-east-multi-res';
+const hothamHillBase = '/images/portfolio/hotham-hill-apartments';
+const margotTownhouseBase = '/images/portfolio/margot-townhouse-doncaster';
 const oconnellsHotelBase = '/images/portfolio/oconnells-hotel-south-melbourne';
 const boydsBase = '/images/portfolio/boyds-south-yarra';
 const collinsArchBase = '/images/portfolio/collins-arch-cafe';
 const homeCoBase = '/images/portfolio/home-co';
-const rusticaBase = '/images/portfolio/rustica-chapel-st';
+const domain179Base = '/images/portfolio/179-domain-south-yarra';
+const flyingDuckBase = '/images/portfolio/flying-duck-hotel-prahran';
+const hobsonsBayBase = '/images/portfolio/hobsons-bay-hotel';
+const orrongHotelBase = '/images/portfolio/orrong-hotel-toorak';
+const rusticaBrightonBase = '/images/portfolio/rustica-brighton';
+const rusticaQueenCollinsBase = '/images/portfolio/rustica-queen-collins';
+const rusticaSouthYarraBase = '/images/portfolio/rustica-south-yarra';
+const brixWorkplaceBase = '/images/portfolio/brix-workplace-hampton';
+const glenroyDentalBase = '/images/portfolio/glenroy-dental';
+const ivanhoeGirlsBase = '/images/portfolio/ivanhoe-girls-grammar';
+const princesHwyBase = '/images/portfolio/princes-hwy-werribee';
 
 export const portfolioCategories: PortfolioCategory[] = [
   {
@@ -96,8 +111,9 @@ export const portfolioCategories: PortfolioCategory[] = [
       'Commercial projects delivered with strong site management, technical capability and a clear focus on program, quality and outcome. WB Built works collaboratively with clients, consultants and project teams from planning through to completion.',
     seoDescription:
       'View WB Built commercial construction projects — offices, fit-outs and complex builds across Melbourne delivered with strong site management and technical capability.',
-    cardImage: images.commercial,
-    cardAlt: 'WB Built commercial construction project in Melbourne',
+    cardImage: `${brixWorkplaceBase}/meta/card.jpg`,
+    cardAlt: 'WB Built commercial construction project at Brix Workplace, Hampton',
+    heroImage: `${brixWorkplaceBase}/meta/hero.jpg`,
   },
 ];
 
@@ -173,6 +189,116 @@ export const portfolioProjects: PortfolioProject[] = [
       'Browse interior and architectural photography from Middle Park. Images are optimised for web viewing and ready to share across social channels.',
   },
   {
+    slug: 'armstrong-house',
+    categorySlug: 'residential',
+    name: 'Armstrong House',
+    location: 'Albert Park, Victoria',
+    scope: 'Alterations and additions to a period home',
+    highlights: [
+      'Alterations and additions to a period home in Albert Park',
+      'Architectural coordination across heritage and new work',
+      'Refined interior finishes and detailed craftsmanship',
+      'Delivered with precision, care and attention to detail',
+    ],
+    seoDescription:
+      'Armstrong House, Albert Park — alterations and additions to a period home by WB Built, delivered with architectural precision and exceptional finish quality.',
+    cardImage: `${armstrongHouseBase}/meta/card.jpg`,
+    cardAlt: 'WB Built residential alterations at Armstrong House, Albert Park',
+    heroImage: `${armstrongHouseBase}/meta/hero.jpg`,
+    ogImage: `${armstrongHouseBase}/meta/og.jpg`,
+    manifestPath: 'images/portfolio/armstrong-house-albert-park/manifest.json',
+    galleryIntro:
+      'Browse interior and architectural photography from Armstrong House, Albert Park. Images are optimised for web viewing and ready to share across social channels.',
+  },
+  {
+    slug: 'oxford-house',
+    categorySlug: 'residential',
+    name: 'Oxford House',
+    location: 'Newport, Victoria',
+    scope: 'High-end residential home',
+    highlights: [
+      'High-end residential home in Newport',
+      'Architectural coordination and refined interior finishes',
+      'Quality craftsmanship across living and outdoor spaces',
+      'Delivered with precision, care and attention to detail',
+    ],
+    seoDescription:
+      'Oxford House, Newport — high-end residential construction by WB Built, delivered with architectural precision and exceptional finish quality.',
+    cardImage: `${oxfordHouseBase}/meta/card.jpg`,
+    cardAlt: 'WB Built residential home at Oxford House, Newport',
+    heroImage: `${oxfordHouseBase}/meta/hero.jpg`,
+    ogImage: `${oxfordHouseBase}/meta/og.jpg`,
+    manifestPath: 'images/portfolio/oxford-house-newport/manifest.json',
+    galleryIntro:
+      'Browse interior and architectural photography from Oxford House, Newport. Images are optimised for web viewing and ready to share across social channels.',
+  },
+  {
+    slug: 'salford-house',
+    categorySlug: 'residential',
+    name: 'Salford House',
+    location: 'Balwyn, Victoria',
+    scope: 'High-end house with basement carpark',
+    highlights: [
+      'High-end residential home with basement carpark in Balwyn',
+      'Complex structural coordination across levels',
+      'Refined architectural detailing and quality finishes',
+      'Delivered with precision, care and attention to detail',
+    ],
+    seoDescription:
+      'Salford House, Balwyn — high-end residential construction with basement carpark by WB Built, delivered with architectural precision and exceptional finish quality.',
+    cardImage: `${salfordHouseBase}/meta/card.jpg`,
+    cardAlt: 'WB Built residential home at Salford House, Balwyn',
+    heroImage: `${salfordHouseBase}/meta/hero.jpg`,
+    ogImage: `${salfordHouseBase}/meta/og.jpg`,
+    manifestPath: 'images/portfolio/salford-house-balwyn/manifest.json',
+    galleryIntro:
+      'Browse interior and architectural photography from Salford House, Balwyn. Images are optimised for web viewing and ready to share across social channels.',
+  },
+  {
+    slug: 'silver-house',
+    categorySlug: 'residential',
+    name: 'Silver House',
+    location: 'Eltham, Victoria',
+    scope: "Alterations and additions to a 1970s mud brick home",
+    highlights: [
+      "Alterations and additions to a 1970s mud brick home in Eltham",
+      'Sensitive integration of new work with existing fabric',
+      'Refined interior finishes and detailed craftsmanship',
+      'Delivered with precision, care and attention to detail',
+    ],
+    seoDescription:
+      'Silver House, Eltham — alterations and additions to a 1970s mud brick home by WB Built, delivered with architectural precision and exceptional finish quality.',
+    cardImage: `${silverHouseBase}/meta/card.jpg`,
+    cardAlt: 'WB Built residential alterations at Silver House, Eltham',
+    heroImage: `${silverHouseBase}/meta/hero.jpg`,
+    ogImage: `${silverHouseBase}/meta/og.jpg`,
+    manifestPath: 'images/portfolio/silver-house-eltham/manifest.json',
+    galleryIntro:
+      'Browse interior and architectural photography from Silver House, Eltham. Images are optimised for web viewing and ready to share across social channels.',
+  },
+  {
+    slug: 'sunbury-house',
+    categorySlug: 'residential',
+    name: 'Sunbury House',
+    location: 'Sunbury, Victoria',
+    scope: 'High-end house and outbuilding',
+    highlights: [
+      'High-end residential home and outbuilding in Sunbury',
+      'Architectural coordination across house and ancillary buildings',
+      'Quality craftsmanship and refined finishes throughout',
+      'Delivered with precision, care and attention to detail',
+    ],
+    seoDescription:
+      'Sunbury House — high-end residential construction with outbuilding by WB Built, delivered with architectural precision and exceptional finish quality.',
+    cardImage: `${sunburyHouseBase}/meta/card.jpg`,
+    cardAlt: 'WB Built residential home at Sunbury House',
+    heroImage: `${sunburyHouseBase}/meta/hero.jpg`,
+    ogImage: `${sunburyHouseBase}/meta/og.jpg`,
+    manifestPath: 'images/portfolio/sunbury-house/manifest.json',
+    galleryIntro:
+      'Browse interior and architectural photography from Sunbury House. Images are optimised for web viewing and ready to share across social channels.',
+  },
+  {
     slug: 'st-leonards',
     categorySlug: 'multi-residential',
     name: 'St Leonards Multi-Residential',
@@ -239,6 +365,50 @@ export const portfolioProjects: PortfolioProject[] = [
       'Browse interior, architectural and aerial photography from the Malvern East development. Images are optimised for web viewing and ready to share across social channels.',
   },
   {
+    slug: 'hotham-hill-apartments',
+    categorySlug: 'multi-residential',
+    name: 'Hotham Hill Apartments Multi-Residential',
+    location: 'North Melbourne, Victoria',
+    scope: '10 apartments over 3 levels with basement car park',
+    highlights: [
+      '10 apartments over three levels in North Melbourne',
+      'Basement car park and complex structural coordination',
+      'Quality interior finishes and detailed craftsmanship',
+      'Aerial and interior documentation of completed form',
+    ],
+    seoDescription:
+      'Hotham Hill Apartments, North Melbourne — multi-residential development by WB Built with basement car park, delivered with precision, coordination and quality finishes.',
+    cardImage: `${hothamHillBase}/meta/card.jpg`,
+    cardAlt: 'WB Built multi-residential development at Hotham Hill Apartments, North Melbourne',
+    heroImage: `${hothamHillBase}/meta/hero.jpg`,
+    ogImage: `${hothamHillBase}/meta/og.jpg`,
+    manifestPath: 'images/portfolio/hotham-hill-apartments/manifest.json',
+    galleryIntro:
+      'Browse interior, architectural and aerial photography from Hotham Hill Apartments. Images are optimised for web viewing and ready to share across social channels.',
+  },
+  {
+    slug: 'margot-townhouse',
+    categorySlug: 'multi-residential',
+    name: 'Margot Townhouse Multi-Residential',
+    location: 'Doncaster, Victoria',
+    scope: 'Townhouse development including basement carpark',
+    highlights: [
+      'Townhouse development with basement carpark in Doncaster',
+      'Architectural coordination across dwellings and shared spaces',
+      'Quality interior finishes and detailed craftsmanship',
+      'Managed with disciplined site coordination and quality control',
+    ],
+    seoDescription:
+      'Margot Townhouse, Doncaster — multi-residential townhouse development by WB Built with basement carpark, delivered with precision, coordination and quality finishes.',
+    cardImage: `${margotTownhouseBase}/meta/card.jpg`,
+    cardAlt: 'WB Built multi-residential townhouse development at Margot Townhouse, Doncaster',
+    heroImage: `${margotTownhouseBase}/meta/hero.jpg`,
+    ogImage: `${margotTownhouseBase}/meta/og.jpg`,
+    manifestPath: 'images/portfolio/margot-townhouse-doncaster/manifest.json',
+    galleryIntro:
+      'Browse interior and architectural photography from Margot Townhouse, Doncaster. Images are optimised for web viewing and ready to share across social channels.',
+  },
+  {
     slug: 'oconnells-hotel',
     categorySlug: 'hospitality',
     name: "O'Connells Hotel",
@@ -285,68 +455,286 @@ export const portfolioProjects: PortfolioProject[] = [
   {
     slug: 'collins-arch-cafe',
     categorySlug: 'hospitality',
-    name: 'Collins Arch Cafe',
-    location: 'Melbourne CBD, Victoria',
+    name: 'First Love Coffee',
+    location: 'Collins Street, Melbourne CBD',
     scope: 'Cafe fit-out at Collins Arch',
     highlights: [
-      'Hospitality cafe fit-out in Melbourne CBD',
+      'Cafe fit-out on Collins Street in Melbourne CBD',
       'Operational flow and customer experience considered throughout',
       'Refined finishes built for high-traffic venue use',
       'Delivered with disciplined coordination and quality control',
     ],
     seoDescription:
-      'Collins Arch Cafe fit-out by WB Built — hospitality construction in Melbourne CBD delivering atmosphere, detail and operational flow.',
+      'First Love Coffee at Collins Arch — hospitality cafe fit-out by WB Built in Melbourne CBD delivering atmosphere, detail and operational flow.',
     cardImage: `${collinsArchBase}/meta/card.jpg`,
-    cardAlt: 'WB Built hospitality fit-out at Collins Arch Cafe, Melbourne',
+    cardAlt: 'WB Built hospitality fit-out at First Love Coffee, Collins Arch',
     heroImage: `${collinsArchBase}/meta/hero.jpg`,
     ogImage: `${collinsArchBase}/meta/og.jpg`,
     manifestPath: 'images/portfolio/collins-arch-cafe/manifest.json',
     galleryIntro:
-      'Browse interior and venue photography from Collins Arch Cafe. Images are optimised for web viewing and ready to share across social channels.',
+      'Browse interior and venue photography from First Love Coffee at Collins Arch. Images are optimised for web viewing and ready to share across social channels.',
   },
   {
     slug: 'home-co',
     categorySlug: 'hospitality',
-    name: 'HOME CO',
-    location: 'Melbourne, Victoria',
-    scope: 'Hospitality venue fit-out',
+    name: 'HOME CO Cafe',
+    location: 'Hawthorn, Victoria',
+    scope: 'Cafe fit-out',
     highlights: [
-      'Hospitality fit-out delivered for HOME CO',
+      'Cafe fit-out delivered for HOME CO in Hawthorn',
       'Atmosphere, detail and operational flow considered throughout',
       'Refined venue spaces built to make a strong impression',
       'Delivered with disciplined coordination and quality finishes',
     ],
     seoDescription:
-      'HOME CO hospitality fit-out by WB Built — venue construction in Melbourne delivering atmosphere, detail and operational flow.',
+      'HOME CO Cafe, Hawthorn — hospitality fit-out by WB Built delivering atmosphere, detail and operational flow.',
     cardImage: `${homeCoBase}/meta/card.jpg`,
-    cardAlt: 'WB Built hospitality fit-out at HOME CO, Melbourne',
+    cardAlt: 'WB Built hospitality fit-out at HOME CO Cafe, Hawthorn',
     heroImage: `${homeCoBase}/meta/hero.jpg`,
     ogImage: `${homeCoBase}/meta/og.jpg`,
     manifestPath: 'images/portfolio/home-co/manifest.json',
     galleryIntro:
-      'Browse interior and venue photography from HOME CO. Images are optimised for web viewing and ready to share across social channels.',
+      'Browse interior and venue photography from HOME CO Cafe, Hawthorn. Images are optimised for web viewing and ready to share across social channels.',
   },
   {
-    slug: 'rustica-chapel-st',
+    slug: '179-domain',
     categorySlug: 'hospitality',
-    name: 'Rustica',
-    location: 'Chapel Street, Melbourne',
-    scope: 'Hospitality venue fit-out',
+    name: '179 Domain',
+    location: 'South Yarra, Victoria',
+    scope: 'Wine bar and cafe fit-out',
     highlights: [
-      'Hospitality fit-out on Chapel Street',
+      'Wine bar and cafe fit-out on Domain Road, South Yarra',
       'Atmosphere, detail and operational flow considered throughout',
       'Refined venue spaces built to make a strong impression',
       'Delivered with disciplined coordination and quality finishes',
     ],
     seoDescription:
-      'Rustica Chapel Street hospitality fit-out by WB Built — venue construction delivering atmosphere, detail and operational flow.',
-    cardImage: `${rusticaBase}/meta/card.jpg`,
-    cardAlt: 'WB Built hospitality fit-out at Rustica, Chapel Street',
-    heroImage: `${rusticaBase}/meta/hero.jpg`,
-    ogImage: `${rusticaBase}/meta/og.jpg`,
-    manifestPath: 'images/portfolio/rustica-chapel-st/manifest.json',
+      '179 Domain, South Yarra — wine bar and cafe fit-out by WB Built delivering atmosphere, detail and operational flow.',
+    cardImage: `${domain179Base}/meta/card.jpg`,
+    cardAlt: 'WB Built hospitality fit-out at 179 Domain, South Yarra',
+    heroImage: `${domain179Base}/meta/hero.jpg`,
+    ogImage: `${domain179Base}/meta/og.jpg`,
+    manifestPath: 'images/portfolio/179-domain-south-yarra/manifest.json',
     galleryIntro:
-      'Browse interior and venue photography from Rustica, Chapel Street. Images are optimised for web viewing and ready to share across social channels.',
+      'Browse interior and venue photography from 179 Domain, South Yarra. Images are optimised for web viewing and ready to share across social channels.',
+  },
+  {
+    slug: 'flying-duck-hotel',
+    categorySlug: 'hospitality',
+    name: 'Flying Duck Hotel',
+    location: 'Prahran, Victoria',
+    scope: 'Hotel refurbishment and alterations',
+    highlights: [
+      'Hotel refurbishment and alterations in Prahran',
+      'Atmosphere, detail and operational flow considered throughout',
+      'Durable, functional spaces designed to make a strong impression',
+      'Delivered with disciplined coordination and quality finishes',
+    ],
+    seoDescription:
+      'Flying Duck Hotel, Prahran — hospitality refurbishment by WB Built delivering atmosphere, detail and operational flow across the venue.',
+    cardImage: `${flyingDuckBase}/meta/card.jpg`,
+    cardAlt: 'WB Built hospitality fit-out at Flying Duck Hotel, Prahran',
+    heroImage: `${flyingDuckBase}/meta/hero.jpg`,
+    ogImage: `${flyingDuckBase}/meta/og.jpg`,
+    manifestPath: 'images/portfolio/flying-duck-hotel-prahran/manifest.json',
+    galleryIntro:
+      'Browse interior and venue photography from Flying Duck Hotel, Prahran. Images are optimised for web viewing and ready to share across social channels.',
+  },
+  {
+    slug: 'hobsons-bay-hotel',
+    categorySlug: 'hospitality',
+    name: 'Hobsons Bay Hotel',
+    location: 'Williamstown, Victoria',
+    scope: 'Three-level pub refurbishment including rooftop bar',
+    highlights: [
+      'Three-level pub refurbishment in Williamstown',
+      'Addition of a rooftop bar and venue upgrades throughout',
+      'Atmosphere, detail and operational flow considered throughout',
+      'Delivered with disciplined coordination and quality finishes',
+    ],
+    seoDescription:
+      'Hobsons Bay Hotel, Williamstown — three-level pub refurbishment including rooftop bar by WB Built, delivering atmosphere, detail and operational flow.',
+    cardImage: `${hobsonsBayBase}/meta/card.jpg`,
+    cardAlt: 'WB Built hospitality fit-out at Hobsons Bay Hotel, Williamstown',
+    heroImage: `${hobsonsBayBase}/meta/hero.jpg`,
+    ogImage: `${hobsonsBayBase}/meta/og.jpg`,
+    manifestPath: 'images/portfolio/hobsons-bay-hotel/manifest.json',
+    galleryIntro:
+      'Browse interior and venue photography from Hobsons Bay Hotel, Williamstown. Images are optimised for web viewing and ready to share across social channels.',
+  },
+  {
+    slug: 'orrong-hotel',
+    categorySlug: 'hospitality',
+    name: 'Orrong Hotel',
+    location: 'Toorak, Victoria',
+    scope: 'Art Deco hotel refurbishment',
+    highlights: [
+      'Art Deco hotel refurbishment in Toorak',
+      'Sensitive restoration balanced with contemporary venue needs',
+      'Atmosphere, detail and operational flow considered throughout',
+      'Delivered with disciplined coordination and quality finishes',
+    ],
+    seoDescription:
+      'Orrong Hotel, Toorak — Art Deco hotel refurbishment by WB Built delivering atmosphere, detail and operational flow across the venue.',
+    cardImage: `${orrongHotelBase}/meta/card.jpg`,
+    cardAlt: 'WB Built hospitality fit-out at Orrong Hotel, Toorak',
+    heroImage: `${orrongHotelBase}/meta/hero.jpg`,
+    ogImage: `${orrongHotelBase}/meta/og.jpg`,
+    manifestPath: 'images/portfolio/orrong-hotel-toorak/manifest.json',
+    galleryIntro:
+      'Browse interior and venue photography from Orrong Hotel, Toorak. Images are optimised for web viewing and ready to share across social channels.',
+  },
+  {
+    slug: 'rustica-brighton',
+    categorySlug: 'hospitality',
+    name: 'Rustica Brighton',
+    location: 'Brighton, Victoria',
+    scope: 'Cafe fit-out',
+    highlights: [
+      'Cafe fit-out in Brighton',
+      'Atmosphere, detail and operational flow considered throughout',
+      'Refined venue spaces built to make a strong impression',
+      'Delivered with disciplined coordination and quality finishes',
+    ],
+    seoDescription:
+      'Rustica Brighton — cafe fit-out by WB Built delivering atmosphere, detail and operational flow.',
+    cardImage: `${rusticaBrightonBase}/meta/card.jpg`,
+    cardAlt: 'WB Built hospitality fit-out at Rustica Brighton',
+    heroImage: `${rusticaBrightonBase}/meta/hero.jpg`,
+    ogImage: `${rusticaBrightonBase}/meta/og.jpg`,
+    manifestPath: 'images/portfolio/rustica-brighton/manifest.json',
+    galleryIntro:
+      'Browse interior and venue photography from Rustica Brighton. Images are optimised for web viewing and ready to share across social channels.',
+  },
+  {
+    slug: 'rustica-queen-collins',
+    categorySlug: 'hospitality',
+    name: 'Rustica Queen & Collins',
+    location: 'Melbourne CBD, Victoria',
+    scope: 'Cafe fit-out',
+    highlights: [
+      'Cafe fit-out at Queen & Collins in Melbourne CBD',
+      'Operational flow and customer experience considered throughout',
+      'Refined finishes built for high-traffic venue use',
+      'Delivered with disciplined coordination and quality finishes',
+    ],
+    seoDescription:
+      'Rustica Queen & Collins — cafe fit-out by WB Built in Melbourne CBD delivering atmosphere, detail and operational flow.',
+    cardImage: `${rusticaQueenCollinsBase}/meta/card.jpg`,
+    cardAlt: 'WB Built hospitality fit-out at Rustica Queen & Collins',
+    heroImage: `${rusticaQueenCollinsBase}/meta/hero.jpg`,
+    ogImage: `${rusticaQueenCollinsBase}/meta/og.jpg`,
+    manifestPath: 'images/portfolio/rustica-queen-collins/manifest.json',
+    galleryIntro:
+      'Browse interior and venue photography from Rustica Queen & Collins. Images are optimised for web viewing and ready to share across social channels.',
+  },
+  {
+    slug: 'rustica-south-yarra',
+    categorySlug: 'hospitality',
+    name: 'Rustica South Yarra',
+    location: 'South Yarra, Victoria',
+    scope: 'Cafe fit-out including commercial bakery and patisserie',
+    highlights: [
+      'Cafe fit-out with commercial bakery and patisserie in South Yarra',
+      'Operational flow across front-of-house and production spaces',
+      'Refined finishes built for high-traffic hospitality use',
+      'Delivered with disciplined coordination and quality finishes',
+    ],
+    seoDescription:
+      'Rustica South Yarra — cafe fit-out including commercial bakery and patisserie by WB Built, delivering atmosphere, detail and operational flow.',
+    cardImage: `${rusticaSouthYarraBase}/meta/card.jpg`,
+    cardAlt: 'WB Built hospitality fit-out at Rustica South Yarra',
+    heroImage: `${rusticaSouthYarraBase}/meta/hero.jpg`,
+    ogImage: `${rusticaSouthYarraBase}/meta/og.jpg`,
+    manifestPath: 'images/portfolio/rustica-south-yarra/manifest.json',
+    galleryIntro:
+      'Browse interior and venue photography from Rustica South Yarra. Images are optimised for web viewing and ready to share across social channels.',
+  },
+  {
+    slug: 'brix-workplace',
+    categorySlug: 'commercial',
+    name: 'Brix Workplace',
+    location: 'Hampton, Victoria',
+    scope: 'Office base build and fit-out',
+    highlights: [
+      'Office base build and fit-out in Hampton',
+      'Strong site management and technical coordination',
+      'Quality finishes suited to contemporary workplace use',
+      'Delivered with a clear focus on program, quality and outcome',
+    ],
+    seoDescription:
+      'Brix Workplace, Hampton — office base build and fit-out by WB Built, delivered with strong site management and technical capability.',
+    cardImage: `${brixWorkplaceBase}/meta/card.jpg`,
+    cardAlt: 'WB Built commercial fit-out at Brix Workplace, Hampton',
+    heroImage: `${brixWorkplaceBase}/meta/hero.jpg`,
+    ogImage: `${brixWorkplaceBase}/meta/og.jpg`,
+    manifestPath: 'images/portfolio/brix-workplace-hampton/manifest.json',
+    galleryIntro:
+      'Browse interior and architectural photography from Brix Workplace, Hampton. Images are optimised for web viewing and ready to share across social channels.',
+  },
+  {
+    slug: 'glenroy-dental',
+    categorySlug: 'commercial',
+    name: 'Glenroy Dental',
+    location: 'Glenroy, Victoria',
+    scope: 'Dental clinic base build and fit-out',
+    highlights: [
+      'Dental clinic base build and fit-out in Glenroy',
+      'Technical coordination across clinical and reception spaces',
+      'Durable finishes suited to healthcare environments',
+      'Delivered with a clear focus on program, quality and outcome',
+    ],
+    seoDescription:
+      'Glenroy Dental — dental clinic base build and fit-out by WB Built, delivered with strong site management and technical capability.',
+    cardImage: `${glenroyDentalBase}/meta/card.jpg`,
+    cardAlt: 'WB Built commercial fit-out at Glenroy Dental',
+    heroImage: `${glenroyDentalBase}/meta/hero.jpg`,
+    ogImage: `${glenroyDentalBase}/meta/og.jpg`,
+    manifestPath: 'images/portfolio/glenroy-dental/manifest.json',
+    galleryIntro:
+      'Browse interior and architectural photography from Glenroy Dental. Images are optimised for web viewing and ready to share across social channels.',
+  },
+  {
+    slug: 'ivanhoe-girls-grammar',
+    categorySlug: 'commercial',
+    name: 'Ivanhoe Girls Grammar School',
+    location: 'Ivanhoe, Victoria',
+    scope: 'Refurbishment and alterations to the Performing Arts Centre',
+    highlights: [
+      'Refurbishment and alterations to the IGGS Performing Arts Centre',
+      'Complex coordination within an active school environment',
+      'Quality finishes suited to performance and education spaces',
+      'Delivered with a clear focus on program, quality and outcome',
+    ],
+    seoDescription:
+      'Ivanhoe Girls Grammar School Performing Arts Centre — commercial refurbishment by WB Built, delivered with strong site management and technical capability.',
+    cardImage: `${ivanhoeGirlsBase}/meta/card.jpg`,
+    cardAlt: 'WB Built commercial refurbishment at Ivanhoe Girls Grammar School',
+    heroImage: `${ivanhoeGirlsBase}/meta/hero.jpg`,
+    ogImage: `${ivanhoeGirlsBase}/meta/og.jpg`,
+    manifestPath: 'images/portfolio/ivanhoe-girls-grammar/manifest.json',
+    galleryIntro:
+      'Browse interior and architectural photography from the Ivanhoe Girls Grammar School Performing Arts Centre. Images are optimised for web viewing and ready to share across social channels.',
+  },
+  {
+    slug: 'princes-hwy',
+    categorySlug: 'commercial',
+    name: 'Princes Hwy',
+    location: 'Werribee, Victoria',
+    scope: 'Office and retail base building',
+    highlights: [
+      'Office and retail base building in Werribee',
+      'Strong site management and technical coordination',
+      'Quality delivery across commercial and retail spaces',
+      'Delivered with a clear focus on program, quality and outcome',
+    ],
+    seoDescription:
+      'Princes Hwy, Werribee — office and retail base building by WB Built, delivered with strong site management and technical capability.',
+    cardImage: `${princesHwyBase}/meta/card.jpg`,
+    cardAlt: 'WB Built commercial construction at Princes Hwy, Werribee',
+    heroImage: `${princesHwyBase}/meta/hero.jpg`,
+    ogImage: `${princesHwyBase}/meta/og.jpg`,
+    manifestPath: 'images/portfolio/princes-hwy-werribee/manifest.json',
   },
 ];
 

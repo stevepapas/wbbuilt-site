@@ -7,6 +7,9 @@ LABEL="${3:?Project label required}"
 HERO_FILE="${4:?Hero image filename (without extension) required}"
 PROJECT_TYPE="${5:-multi-residential}"
 
+# Avoid slow OpenCL init failures on this machine
+export MAGICK_OCL_DEVICE=false
+
 DEST="/Users/stevepapa/Sites/WB Build/site/public/images/portfolio/${SLUG}"
 CONVERT="/opt/ImageMagick/bin/convert"
 AERIAL_DIR="${AERIAL_DIR:-}"
@@ -77,6 +80,12 @@ for f in thumbs:
             f"Exterior view of {label} by WB Built"
             if kind == "exterior"
             else f"Hospitality fit-out and venue detail at {label} by WB Built"
+        )
+    elif project_type == "commercial":
+        alt = (
+            f"Exterior view of {label} by WB Built"
+            if kind == "exterior"
+            else f"Commercial construction and fit-out detail at {label} by WB Built"
         )
     else:
         alt = (

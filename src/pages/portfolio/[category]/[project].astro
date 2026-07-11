@@ -121,7 +121,10 @@ const structuredData = {
     <div class="container">
       <div class="gallery-intro">
         <h2>Project gallery</h2>
-        <p>{project.galleryIntro}</p>
+        <p>
+          Browse photography below. See how we can help you with your next project by
+          <a href={withBase('/contact')}>contacting us</a>.
+        </p>
       </div>
       <PortfolioGallery
         images={galleryImages}
@@ -181,6 +184,14 @@ const structuredData = {
     margin: 0;
     color: var(--muted);
     max-width: 720px;
+  }
+  .gallery-intro a {
+    color: var(--text);
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+  }
+  .gallery-intro a:hover {
+    color: var(--accent);
   }
   @media (max-width: 640px) {
     .project-meta { grid-template-columns: 1fr; }
